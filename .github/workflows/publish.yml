@@ -1,7 +1,7 @@
 name: Publish to GitHub Packages
 
 on:
-  pull_request:
+  push:
     branches:
       - main
     paths:
@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup dotnet SDK
         uses: actions/setup-dotnet@v4
