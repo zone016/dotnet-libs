@@ -9,7 +9,7 @@
 
     <PropertyGroup>
         <PackageId>Zone016.Printer</PackageId>
-        <Version>0.1.1</Version>
+        <Version>0.1.0</Version>
         <Authors>6a6f6a6f</Authors>
         <Company>Zone016</Company>
         <Description>Printer is a minimalistic library to print stuff without external dependencies.</Description>
