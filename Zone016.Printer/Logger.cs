@@ -1,4 +1,6 @@
-﻿namespace Zone016.Printer;
+﻿// Copyright (c) Zone016 Hackerspace. All Rights Reserved. Licensed under the MIT license.
+
+namespace Zone016.Printer;
 
 /// <summary>
 /// Logger is a static helper class that provides a simple way to log messages of different levels.
