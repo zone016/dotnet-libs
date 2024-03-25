@@ -1,0 +1,37 @@
+name: Publish the libraries
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup dotnet SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+        
+    - name: Detect modified libraries
+      run: |
+        git diff --name-only ${{ github.event.before }} ${{ github.sha }} > changed_files.txt
+        echo "LIBS=$(grep -Eo 'Zone016\.[^/]+/' changed_files.txt | uniq | tr '\n' ' ')" >> $GITHUB_ENV
+
+    - name: Build and publish modified libraries
+      if: env.LIBS != ''
+      run: |
+        for lib in $LIBS; do
+          lib_path=${lib%/}
+          echo "Processing $lib_path..."
+          dotnet pack "$lib_path"
+
+          dotnet nuget push "$lib_path/bin/Release/*.nupkg" \
+            --source "https://nuget.pkg.github.com/zone016/index.json" \
+            --api-key ${{ secrets.GITHUB_TOKEN }} || echo "::error ::Failed to publish $lib_path"
+        done
+      env:
+        LIBS: ${{ env.LIBS }}
