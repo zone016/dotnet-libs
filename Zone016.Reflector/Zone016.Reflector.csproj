@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsAotCompatible>true</IsAotCompatible>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Zone016.Reflector</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>6a6f6a6f</Authors>
+    <Company>Zone016</Company>
+    <Description>DSL and library to search objects properties.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/zone016/dotnet-libs</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/zone016/dotnet-libs.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+</Project>
