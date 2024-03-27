@@ -5,4 +5,4 @@ repos:
         name: Format dotnet files
         entry: dotnet format -v n
         language: system
-        files: '\.(cs|vb|csproj|vbproj|json|xml|sln)$'
+        files: '\.(cs|csproj|sln)$'
