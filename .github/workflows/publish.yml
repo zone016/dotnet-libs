@@ -27,6 +27,8 @@ jobs:
       - name: Build and publish .csproj modifications
         run: |
           for csproj in $(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.csproj$'); do
-            dotnet pack $csproj -c Release --output ./nupkgs
-            dotnet nuget push "./nupkgs/*.nupkg" --source "github"
+            if [[ ! $csproj =~ .*.Tests.csproj$ ]]; then
+              dotnet pack $csproj -c Release --output ./nupkgs
+              dotnet nuget push "./nupkgs/*.nupkg" --source "github"
+            fi
           done
