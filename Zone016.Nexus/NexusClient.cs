@@ -57,12 +57,16 @@ public class NexusClient : IDisposable
 
     public async Task<List<Repository>> ListRepositoriesAsync() =>
         await GetAsync<List<Repository>>("repositories") ?? [];
+    
+    public async Task<Repository?> GetRepositoryAsync(string repositoryName) =>
+        await GetAsync<Repository>($"repositories/{repositoryName}");
 
-    private async Task<T?> GetAsync<T>(string path)
+    private async Task<T?> GetAsync<T>(string path, bool ensure = true)
     {
         var response = await _httpClient.GetAsync(path, _cancellationToken);
+        if (!response.IsSuccessStatusCode && !ensure) return default;
+        
         response.EnsureSuccessStatusCode();
-
         return await response.Content.ReadFromJsonAsync<T>(_cancellationToken);
     }
 

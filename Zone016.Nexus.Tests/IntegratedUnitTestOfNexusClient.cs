@@ -23,4 +23,18 @@ public class IntegratedUnitTestOfNexusClient
         Assert.IsNotNull(repositories);
         Assert.IsTrue(repositories.Count > 0);
     }
+    
+    [TestMethod]
+    public async Task TestGetRepositoryAsync()
+    {
+        var repositories = await _client.ListRepositoriesAsync();
+        var repository = repositories.FirstOrDefault();
+        Assert.IsNotNull(repository);
+
+        var repositoryName = repository.Name;
+        repository = await _client.GetRepositoryAsync(repositoryName);
+        
+        Assert.IsNotNull(repository);
+        Assert.AreEqual(repositoryName, repository.Name);
+    }
 }

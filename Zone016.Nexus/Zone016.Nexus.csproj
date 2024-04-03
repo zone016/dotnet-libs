@@ -8,7 +8,7 @@
 
   <PropertyGroup>
     <PackageId>Zone016.Nexus</PackageId>
-    <Version>0.1.1</Version>
+    <Version>0.1.2</Version>
     <Authors>6a6f6a6f</Authors>
     <Company>Zone016</Company>
     <Description>Minimalistic client for the Nexus REST API.</Description>
