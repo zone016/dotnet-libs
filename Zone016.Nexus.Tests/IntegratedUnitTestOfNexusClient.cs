@@ -5,7 +5,7 @@ namespace Zone016.Nexus.Tests;
 [TestClass]
 public class IntegratedUnitTestOfNexusClient
 {
-    private NexusClient _client;
+    private readonly NexusClient _client;
     
     public IntegratedUnitTestOfNexusClient()
     {
