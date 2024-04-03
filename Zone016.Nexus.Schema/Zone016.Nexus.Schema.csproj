@@ -6,4 +6,16 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <PackageId>Zone016.Nexus.Schema</PackageId>
+        <Version>0.1.1</Version>
+        <Authors>6a6f6a6f</Authors>
+        <Company>Zone016</Company>
+        <Description>Schema for the Nexus OSS REST API.</Description>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/zone016/dotnet-libs</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/zone016/dotnet-libs.git</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+    </PropertyGroup>
+
 </Project>

@@ -1,13 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Zone016.Nexus.Schema\Zone016.Nexus.Schema.csproj" />
-    </ItemGroup>
+  <PropertyGroup>
+    <PackageId>Zone016.Nexus</PackageId>
+    <Version>0.1.1</Version>
+    <Authors>6a6f6a6f</Authors>
+    <Company>Zone016</Company>
+    <Description>Minimalistic client for the Nexus REST API.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/zone016/dotnet-libs</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/zone016/dotnet-libs.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Zone016.Nexus.Schema\Zone016.Nexus.Schema.csproj" />
+  </ItemGroup>
 
 </Project>
