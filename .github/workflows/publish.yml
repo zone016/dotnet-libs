@@ -12,8 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Setup dotnet SDK
         uses: actions/setup-dotnet@v4
@@ -22,13 +20,19 @@ jobs:
       
       - name: Configure NuGet for GitHub Packages
         run: |
-          dotnet nuget add source --username zone016 --password ${{secrets.GITHUB_TOKEN}} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/zone016/index.json"
+          dotnet nuget add source \
+            --username zone016 \
+            --password "${{secrets.GITHUB_TOKEN}}" \
+            --store-password-in-clear-text \
+            --name "github" \
+            --skip-duplicate \
+            "https://nuget.pkg.github.com/zone016/index.json"
 
-      - name: Build and publish .csproj modifications
-        run: |
-          for csproj in $(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '\.csproj$'); do
-            if [[ ! $csproj =~ .*.Tests.csproj$ ]]; then
-              dotnet pack $csproj -c Release --output ./nupkgs
-              dotnet nuget push "./nupkgs/*.nupkg" --source "github"
-            fi
-          done
+      - name: Global restore
+        run: dotnet restore
+
+      - name: Global pack build
+        run: dotnet pack -c Release --no-restore --output ./packages
+
+      - name: NuGet publish
+        run: dotnet nuget push "./packages/*.nupkg" --source "github"
