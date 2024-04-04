@@ -10,15 +10,21 @@ No geral, você sempre vai precisar da última LTS do dotnet SDK/runtime dispon�
 
 Não vamos listar aqui coisas de teste, então segue a lista:
 
-| **Namespace**                                     | **Descrição**                                                                                   |
-| ------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| [`Zone016.Nexus`](./Zone016.Nexus)                | Cliente minimalista da API do [Nexus OSS](https://www.sonatype.com/products/sonatype-nexus-oss) |
-| [`Zone016.Nexus.Schema`](./Zone016.Nexus.Schema/) | Esquemas de dados para o cliente do Nexus OSS                                                   |
-| [`Zone016.Printer`](./Zone016.Printer/)           | Uma forma menos ruim de lidar com _stdout_ e _stderr_                                           |
-| [`Zone016.Process`](./Zone016.Process/)           | Abstrações para processos e execução de comandos                                                |
-| [`Zone016.Project`](./Zone016.Project/)           | Coisas para lidar com projetos dotnet e suas particularidades                                   |
-| [`Zone016.Reflector`](./Zone016.Reflector/)       | Uma DSL para reflexão de tipos e objetos                                                        |
-| [`Zone016.Boxer`](./Zone016.Boxer/)               | Cliente para APIs de coisas de CTF                                                              |
+| **Namespace**                                           | **Descrição**                                                                                   |
+| ------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| [**`Zone016.Nexus`**](./Zone016.Nexus)                  | Cliente minimalista da API do [Nexus OSS](https://www.sonatype.com/products/sonatype-nexus-oss) |
+| [**`Zone016.Nexus.Schema`**](./Zone016.Nexus.Schema/)   | Esquemas de dados para o cliente do Nexus OSS                                                   |
+| [**`Zone016.Printer`**](./Zone016.Printer/)             | Uma forma menos ruim de lidar com _stdout_ e _stderr_                                           |
+| [**`Zone016.Process`**](./Zone016.Process/)             | Abstrações para processos e execução de comandos                                                |
+| [**`Zone016.Project`**](./Zone016.Project/)             | Coisas para lidar com projetos dotnet e suas particularidades                                   |
+| [**`Zone016.Reflector`**](./Zone016.Reflector/)         | Uma DSL para reflexão de tipos e objetos                                                        |
+| [**`Zone016.Boxer`**](./Zone016.Boxer/)                 | Cliente da API do HTB                                                                           |
+| [**`Zone016.Boxer.Schema`**](./Zone016.Boxer.Schema/)   | Esquemas de dados da API do HTB                                                                 |
+| [**`Zone016.Notion`**](./Zone016.Notion/)               | Cliente (bem vagagundo) da API do Notion                                                        |
+| [**`Zone016.Notion.Schema`**](./Zone016.Notion.Schema/) | Esquemas (minificados) de dados da API do Notion                                                |
+| [**`Zone016.Clock`\***](./Zone016.Clock/)               | Sincronizador do HTB para o Notion                                                              |
+
+Projetos marcados com `*` na primeira coluna da tabela não **respondemos _issues_** devido a sua implementação ser exclusiva.
 
 ## Adicionando ao seu projeto
 
