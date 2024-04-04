@@ -40,13 +40,16 @@ public class IntegratedUnitTestOfNexusClient
         Assert.IsNotNull(repository);
         Assert.AreEqual(repositoryName, repository.Name);
     }
-    
+
     [TestMethod]
     public async Task TesGetRepositoryAssetsAsync()
     {
         var repositories = await _client.ListRepositoriesAsync();
         var repository = repositories.FirstOrDefault(repository => repository.Name == "nuget.org-proxy");
-        if (repository is null) Assert.Inconclusive("This test requires a repository named nuget.org-proxy.");
+        if (repository is null)
+        {
+            Assert.Inconclusive("This test requires a repository named nuget.org-proxy.");
+        }
 
         var assets = await _client.GetRepositoryAssetsAsync(repository.Name);
         Assert.IsNotNull(assets);

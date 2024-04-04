@@ -63,19 +63,22 @@ public class NexusClient : IDisposable
 
     public async Task<Repository?> GetRepositoryAsync(string repositoryName) =>
         await GetAsync<Repository>($"repositories/{repositoryName}");
-    
-    public async Task<List<Asset>> GetRepositoryAssetsAsync(string repositoryName, int limit = 0) => 
+
+    public async Task<List<Asset>> GetRepositoryAssetsAsync(string repositoryName, int limit = 0) =>
         await GetAllItemsAsync<Asset>($"assets?repository={repositoryName}", limit);
 
     private async Task<T?> GetAsync<T>(string path, bool ensure = true)
     {
         var response = await _httpClient.GetAsync(path, _cancellationToken);
-        if (!response.IsSuccessStatusCode && !ensure) return default;
+        if (!response.IsSuccessStatusCode && !ensure)
+        {
+            return default;
+        }
 
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<T>(_cancellationToken);
     }
-    
+
     private async Task<List<T>> GetAllItemsAsync<T>(string path, int limit = 0)
     {
         var items = new List<T>();
@@ -86,13 +89,19 @@ public class NexusClient : IDisposable
             var paginatedPath = string.IsNullOrEmpty(continuationToken)
                 ? path
                 : $"{path}{separator}continuationToken={continuationToken}";
-            
-            var paginatedResponse =  await GetAsync<PaginatedResponse<T>>(paginatedPath);
 
-            if (paginatedResponse?.Items is not null) items.AddRange(paginatedResponse.Items);
+            var paginatedResponse = await GetAsync<PaginatedResponse<T>>(paginatedPath);
+
+            if (paginatedResponse?.Items is not null)
+            {
+                items.AddRange(paginatedResponse.Items);
+            }
 
             continuationToken = paginatedResponse?.ContinuationToken;
-            if (limit <= 0 || items.Count < limit) continue;
+            if (limit <= 0 || items.Count < limit)
+            {
+                continue;
+            }
 
             items = items.Take(limit).ToList();
             break;
