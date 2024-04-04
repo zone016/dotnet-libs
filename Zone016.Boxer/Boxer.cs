@@ -10,7 +10,8 @@ public sealed class Boxer
     private readonly HttpClientHandler _httpClientHandler;
 
     private CancellationToken _cancellationToken = CancellationToken.None;
-
+    private TimeSpan _delay = TimeSpan.FromMilliseconds(500);
+    
     public static Boxer Create(string token) => new(token);
 
     public Boxer WithSuppressedCertificateValidation()
@@ -28,6 +29,12 @@ public sealed class Boxer
     public Boxer WithTimeout(TimeSpan timeout)
     {
         _httpClient.Timeout = timeout;
+        return this;
+    }
+    
+    public Boxer WithDelay(TimeSpan delay)
+    {
+        _delay = delay;
         return this;
     }
 
@@ -58,7 +65,8 @@ public sealed class Boxer
             {
                 continue;
             }
-
+            
+            await Task.Delay(_delay, _cancellationToken);
             response = await _httpClient.GetAsync($"challenges?page={++currentPage}", _cancellationToken);
             response.EnsureSuccessStatusCode();
 
