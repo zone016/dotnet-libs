@@ -53,7 +53,10 @@ if (File.Exists(challengesFile))
     PrintInformational($"Loaded #{challenges.Count} challenges from cache.");
 }
 
-var boxerClient = Boxer.Create(hackTheBoxToken);
+var boxerClient = Boxer
+    .Create(hackTheBoxToken)
+    .WithDelay(TimeSpan.FromSeconds(5));
+
 if (challenges.Count == 0)
 {
     challenges = await boxerClient.ListChallengesAsync();
@@ -62,4 +65,8 @@ if (challenges.Count == 0)
 }
 
 PrintSuccess("Challenges loaded successfully.");
+PrintInformational($"Fetching database {notionDatabaseId} from Notion...");
+
 var notionClient = NotionClient.Create(notionSecret);
+var database = await notionClient.GetDatabaseAsync(notionDatabaseId);
+PrintSuccess($"Object {database.Object} (#{database.Id}) fetched successfully!");
