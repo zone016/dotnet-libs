@@ -2,6 +2,6 @@
 
 global using System.Text.Json;
 global using Zone016.Boxer;
-global using Zone016.Notion;
 global using Zone016.Boxer.Schema;
+global using Zone016.Notion;
 global using static Zone016.Printer.Logger;

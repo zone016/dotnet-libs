@@ -1,4 +1,6 @@
-﻿namespace Zone016.Notion;
+﻿// Copyright (c) Zone016 Hackerspace. All Rights Reserved. Licensed under the MIT license.
+
+namespace Zone016.Notion;
 
 public class NotionClient
 {
@@ -28,7 +30,7 @@ public class NotionClient
         _httpClient.Timeout = timeout;
         return this;
     }
-    
+
     public async Task<NotionEntity> GetDatabaseAsync(string databaseId)
     {
         var response = await _httpClient.GetAsync($"databases/{databaseId}", _cancellationToken);
@@ -37,20 +39,20 @@ public class NotionClient
         var database = await response.Content.ReadFromJsonAsync<NotionEntity>(_cancellationToken);
         return database!;
     }
-    
+
     public async Task<NotionQueryResult> QueryDatabaseAsync(string databaseId)
     {
         var response = await _httpClient.PostAsync(
             $"databases/{databaseId}/query",
             new StringContent("{}"),
             _cancellationToken);
-        
+
         response.EnsureSuccessStatusCode();
 
         var result = await response.Content.ReadFromJsonAsync<NotionQueryResult>(_cancellationToken);
         return result!;
     }
-    
+
     private NotionClient(string token)
     {
 
@@ -71,7 +73,7 @@ public class NotionClient
                 Authorization = new AuthenticationHeaderValue("Bearer", token)
             }
         };
-        
+
         _httpClient.DefaultRequestHeaders.Add("Notion-Version", "2022-06-28");
     }
 }

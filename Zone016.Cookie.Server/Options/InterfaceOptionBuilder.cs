@@ -12,7 +12,7 @@ public class InterfaceOptionBuilder : IOptionBuilder<string>
         var defaultInterface = interfaces
             .FirstOrDefault(i => i.OperationalStatus == OperationalStatus.Up &&
                                  i.NetworkInterfaceType != NetworkInterfaceType.Loopback);
-        
+
         return defaultInterface is null ? string.Empty : defaultInterface.Name;
     })
     {

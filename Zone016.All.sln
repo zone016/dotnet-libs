@@ -51,6 +51,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zone016.Cookie.Server", "Zo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zone016.Cookie.Client", "Zone016.Cookie.Client\Zone016.Cookie.Client.csproj", "{4C643A0F-896B-4881-A9D9-5802139F565F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OSV", "OSV", "{AA89F36B-0F88-4832-A335-EF09FDA3B38F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

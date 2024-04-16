@@ -27,7 +27,7 @@ public class IntegratedTestOfNotionClient
         Assert.IsNotNull(database);
         Assert.AreEqual(database.Id, DatabaseId);
     }
-    
+
     [TestMethod]
     public async Task TestQueryDatabaseAsync()
     {

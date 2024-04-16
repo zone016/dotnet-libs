@@ -1,4 +1,6 @@
-﻿const string NotionSecretKey = "NOTION_SECRET";
+﻿// Copyright (c) Zone016 Hackerspace. All Rights Reserved. Licensed under the MIT license.
+
+const string NotionSecretKey = "NOTION_SECRET";
 const string NotionDatabaseIdKey = "NOTION_DATABASE_ID";
 
 const string HackTheBoxTokenKey = "HTB_TOKEN";
@@ -15,23 +17,26 @@ var challengesFile = Path.Combine(workingDirectory, "challenges.json");
 
 if (string.IsNullOrWhiteSpace(hackTheBoxToken))
 {
-    PrintError($"{hackTheBoxToken} environment variable is not set.");  
+    PrintError($"{hackTheBoxToken} environment variable is not set.");
     Environment.Exit(1);
 }
 
 if (string.IsNullOrWhiteSpace(notionSecret))
 {
-    PrintError($"{NotionSecretKey} environment variable is not set.");  
+    PrintError($"{NotionSecretKey} environment variable is not set.");
     Environment.Exit(1);
 }
 
 if (string.IsNullOrWhiteSpace(notionDatabaseId))
 {
-    PrintError($"{NotionDatabaseIdKey} environment variable is not set.");  
+    PrintError($"{NotionDatabaseIdKey} environment variable is not set.");
     Environment.Exit(1);
 }
 
-if (!Directory.Exists(workingDirectory)) Directory.CreateDirectory(workingDirectory);
+if (!Directory.Exists(workingDirectory))
+{
+    Directory.CreateDirectory(workingDirectory);
+}
 
 PrintInformational($"Working directory is {workingDirectory}.");
 PrintInformational("Fetching challenges from HTB...");
