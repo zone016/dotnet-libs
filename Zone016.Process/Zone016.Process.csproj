@@ -8,7 +8,7 @@
 
   <PropertyGroup>
     <PackageId>Zone016.Process</PackageId>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <Authors>6a6f6a6f</Authors>
     <Company>Zone016</Company>
     <Description>System.Diagnostics abstractions.</Description>
