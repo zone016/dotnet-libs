@@ -18,6 +18,23 @@ public class Runner
     private TimeSpan _timeout = TimeSpan.FromSeconds(60);
     private CancellationToken _cancellationToken = CancellationToken.None;
 
+    
+    /// <summary>
+    /// Gets the full paths of the specified executable from the PATH environment variable.
+    /// </summary>
+    /// <param name="executable">The name of the executable to find.</param>
+    /// <returns>
+    /// An IEnumerable of strings, with full path of the executable found in the PATH environment variable.
+    /// If the executable is not found in any directory specified in the PATH, the returned IEnumerable will be empty.
+    /// If the executable is found in multiple directories, each path will be returned, with duplicates removed.
+    /// </returns>
+    public static IEnumerable<string> GetExecutablePathFromEnvironment(string executable) =>
+        Environment.GetEnvironmentVariable("PATH")!.Split(Path.PathSeparator)
+            .Select(path => Path.Combine(path, executable))
+            .Where(File.Exists)
+            .Distinct()
+            .Select(Path.GetFullPath);
+
     /// <summary>
     /// Creates a new instance of the <see cref="Runner"/> class with the specified executable.
     /// </summary>
@@ -38,13 +55,7 @@ public class Runner
     {
         if (!File.Exists(executable))
         {
-            var paths = Environment.GetEnvironmentVariable("PATH")!.Split(Path.PathSeparator)
-                .Select(path => Path.Combine(path, executable))
-                .Where(File.Exists)
-                .Distinct()
-                .Select(Path.GetFullPath)
-                .ToArray();
-
+            var paths = GetExecutablePathFromEnvironment(executable).ToArray();
             switch (paths.Length)
             {
                 case 0:
