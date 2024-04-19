@@ -1,7 +1,5 @@
 ﻿// Copyright (c) Zone016 Hackerspace. All Rights Reserved. Licensed under the MIT license.
 
-using System.Text;
-
 namespace Zone016.Process.Tests;
 
 [TestClass]
@@ -26,5 +24,16 @@ public class UnitTestOfRunner
             .RunAsync();
 
         Assert.IsTrue(buffer.Length > 0);
+    }
+
+    [TestMethod]
+    public void TestGetExecutablePathFromEnvironment()
+    {
+        var binaryName = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) 
+            ? "dotnet.exe"
+            : "dotnet";
+        
+        var paths = Runner.GetExecutablePathFromEnvironment(binaryName).ToArray();
+        Assert.IsTrue(paths.Length >= 1);
     }
 }
