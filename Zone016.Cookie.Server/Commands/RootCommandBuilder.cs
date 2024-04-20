@@ -6,9 +6,11 @@ public class RootCommandBuilder : ICommandBuilder
 {
     public Command Build()
     {
-        var command = new RootCommand("TCP Server for multiple connections")
+        var command = new RootCommand
         {
-            Name = "cookie"
+            Name = "cookie",
+            Description = "A TCP server for generic reverse shells. It is basically a multi-client netcat clone, " +
+                          "witch fancy features. Created to be used in HTB."
         };
 
         var portOption = new PortOptionBuilder().Build();
@@ -17,13 +19,9 @@ public class RootCommandBuilder : ICommandBuilder
         command.AddOption(portOption);
         command.AddOption(interfaceOption);
 
-        command.SetHandler(async (ports, networkInterface) =>
+        command.SetHandler((ports, networkInterface) =>
         {
-            Logger.PrintInformational(
-                $"Listening on port(s) {string.Join(", ", ports)} " +
-                $"on interface {networkInterface}...");
-            await Task.Delay(TimeSpan.FromSeconds(1));
-            // await TcpListenerManager.StartTcpListeners(ports, interfaceIp);
+            
         }, portOption, interfaceOption);
 
         return command;
