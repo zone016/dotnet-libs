@@ -19,9 +19,13 @@ public class RootCommandBuilder : ICommandBuilder
         command.AddOption(portOption);
         command.AddOption(interfaceOption);
 
-        command.SetHandler((ports, networkInterface) =>
+        command.SetHandler((ports, networkInterfaceName) =>
         {
+            var networkInterface = NetworkInterface.GetAllNetworkInterfaces()
+                .First(networkInterface => networkInterface.Name == networkInterfaceName);
             
+            Logger.PrintInformational(
+                $"Starting server on interface {networkInterface.Name} ({networkInterface.Description})...");
         }, portOption, interfaceOption);
 
         return command;
