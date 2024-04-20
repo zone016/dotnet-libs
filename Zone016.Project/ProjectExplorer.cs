@@ -1,7 +1,5 @@
 ﻿// Copyright (c) Zone016 Hackerspace. All Rights Reserved. Licensed under the MIT license.
 
-using System.Collections.Concurrent;
-
 namespace Zone016.Project;
 
 public class ProjectExplorer
@@ -62,10 +60,7 @@ public class ProjectExplorer
     public ProjectExplorer WithInstallation(DotNetInstallation installation)
     {
         _installation = GetDotNetInstallations()
-            .FirstOrDefault(install => 
-                install.Version == installation.Version && 
-                install.Kind == installation.Kind && 
-                install.Path == installation.Path);
+            .FirstOrDefault(systemInstallations => installation == systemInstallations);
         
         if (_installation is null)
         {
