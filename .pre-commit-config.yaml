@@ -3,7 +3,7 @@ repos:
     hooks:
       - id: dotnet-format
         name: Format dotnet files
-        entry: dotnet format -v n
+        entry: dotnet format
         language: system
-        files: '\.(cs|csproj|sln)$'
+        files: '\.(csproj|sln)$'
         stages: [pre-commit]
