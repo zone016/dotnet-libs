@@ -20,19 +20,27 @@ public class InterfaceOptionBuilder : IOptionBuilder<string>
             ArgumentHelpName = "tun0, eth0, ...",
             IsRequired = true
         };
-        
+
         option.AddValidator(result =>
         {
             var networkInterfaceName = result.GetValueOrDefault<string>();
-            var networkInterfaceNames = NetworkInterface.GetAllNetworkInterfaces()
-                .Where(networkInterface => networkInterface.OperationalStatus == OperationalStatus.Up)
-                .Select(networkInterface => networkInterface.Name)
-                .ToArray();
-            
-            if (!networkInterfaceNames.Contains(networkInterfaceName))
+            if (string.IsNullOrWhiteSpace(networkInterfaceName))
             {
-                result.ErrorMessage = $"Network interface {networkInterfaceName} not found or down!";
+                Logger.PrintError("No network interface specified!");
+                Environment.Exit(1);
             }
+            
+            var networkInterfaceNames = NetworkInterface.GetAllNetworkInterfaces()
+                .Select(networkInterface => networkInterface.Name)
+                .ToList();
+
+            if (networkInterfaceNames.Contains(networkInterfaceName)) return;
+
+            Logger.PrintError($"Network interface {networkInterfaceName} not found!");
+            Logger.PrintInformational("Available network interfaces:");
+            networkInterfaceNames.ForEach(Logger.PrintInformational);
+                
+            Environment.Exit(1);
         });
 
         return option;

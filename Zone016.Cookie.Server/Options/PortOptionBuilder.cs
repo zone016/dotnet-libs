@@ -8,7 +8,9 @@ public class PortOptionBuilder : IOptionBuilder<int[]>
     {
         var option = new Option<int[]>(["--ports", "-p"], getDefaultValue: () => [8080, 8443])
         {
-            Description = "Specify the ports to listen on", ArgumentHelpName = "80, 443, ...", IsRequired = true
+            Description = "Specify the ports to listen on",
+            ArgumentHelpName = "80, 443, ...",
+            IsRequired = true
         };
 
         option.AddValidator(result =>
@@ -17,12 +19,13 @@ public class PortOptionBuilder : IOptionBuilder<int[]>
             {
                 if (!int.TryParse(token.Value, out var port))
                 {
-                    result.ErrorMessage = $"The value {token.Value} is not a valid port number!";
+                    Logger.PrintError($"The port number {token.Value} is not a valid number!");
                 }
 
                 if (port is < IPEndPoint.MinPort or > IPEndPoint.MaxPort)
                 {
-                    result.ErrorMessage = $"The port number {port} is out of range!";
+                    Logger.PrintError($"The port number {port} is out of range!");
+                    Environment.Exit(1);
                 }
             }
         });
