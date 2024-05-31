@@ -21,7 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Zone016.Notion\Zone016.Notion.csproj" />
+      <ProjectReference Include="..\..\src\Zone016.Notion\Zone016.Notion\Zone016.Notion.csproj" />
     </ItemGroup>
 
 </Project>

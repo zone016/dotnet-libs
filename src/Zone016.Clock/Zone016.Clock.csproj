@@ -8,8 +8,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Zone016.Boxer\Zone016.Boxer.csproj" />
-      <ProjectReference Include="..\Zone016.Notion\Zone016.Notion.csproj" />
+      <ProjectReference Include="..\Zone016.Boxer\Zone016.Boxer.Schema\Zone016.Boxer.Schema.csproj" />
+      <ProjectReference Include="..\Zone016.Boxer\Zone016.Boxer\Zone016.Boxer.csproj" />
+      <ProjectReference Include="..\Zone016.Notion\Zone016.Notion\Zone016.Notion.csproj" />
       <ProjectReference Include="..\Zone016.Printer\Zone016.Printer.csproj" />
     </ItemGroup>
 

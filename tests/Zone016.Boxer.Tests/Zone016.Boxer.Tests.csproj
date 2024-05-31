@@ -21,7 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Zone016.Boxer\Zone016.Boxer.csproj" />
+      <ProjectReference Include="..\..\src\Zone016.Boxer\Zone016.Boxer\Zone016.Boxer.csproj" />
     </ItemGroup>
-
+  
 </Project>

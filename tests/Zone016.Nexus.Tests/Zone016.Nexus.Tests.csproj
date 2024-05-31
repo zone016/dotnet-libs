@@ -21,7 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Zone016.Nexus\Zone016.Nexus.csproj" />
+      <ProjectReference Include="..\..\src\Zone016.Nexus\Zone016.Nexus\Zone016.Nexus.csproj" />
     </ItemGroup>
-
+  
 </Project>

@@ -17,9 +17,9 @@
     <RepositoryUrl>https://github.com/zone016/dotnet-libs.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\Zone016.Boxer.Schema\Zone016.Boxer.Schema.csproj" />
   </ItemGroup>
-
+  
 </Project>
