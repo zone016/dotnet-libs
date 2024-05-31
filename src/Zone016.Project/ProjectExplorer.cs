@@ -48,11 +48,11 @@ public class ProjectExplorer
                 var start = line.IndexOf(' ') + 1;
                 var end = line.IndexOf(' ', start);
                 var version = line.Substring(start, end - start);
-                
+
                 start = line.IndexOf('[') + 1;
                 end = line.IndexOf(']');
                 var path = line.Substring(start, end - start);
-                
+
                 return new DotNetInstallation(Version.Parse(version), path, DotNetInstallationKind.Runtime);
             }));
     }
@@ -61,7 +61,7 @@ public class ProjectExplorer
     {
         _installation = GetDotNetInstallations()
             .FirstOrDefault(systemInstallations => installation == systemInstallations);
-        
+
         if (_installation is null)
         {
             throw new RuntimeNotFound();
@@ -79,7 +79,7 @@ public class ProjectExplorer
 
         _path = Path.GetFullPath(path);
     }
-    
+
     private static IEnumerable<string> GetDotNetBinaries()
     {
         var binaryName = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)

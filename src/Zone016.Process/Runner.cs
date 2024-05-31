@@ -18,7 +18,6 @@ public class Runner
     private TimeSpan _timeout = TimeSpan.FromSeconds(60);
     private CancellationToken _cancellationToken = CancellationToken.None;
 
-    
     /// <summary>
     /// Gets the full paths of the specified executable from the PATH environment variable.
     /// </summary>

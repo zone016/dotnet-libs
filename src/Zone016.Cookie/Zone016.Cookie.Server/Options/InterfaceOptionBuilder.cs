@@ -29,17 +29,20 @@ public class InterfaceOptionBuilder : IOptionBuilder<string>
                 Logger.PrintError("No network interface specified!");
                 Environment.Exit(1);
             }
-            
+
             var networkInterfaceNames = NetworkInterface.GetAllNetworkInterfaces()
                 .Select(networkInterface => networkInterface.Name)
                 .ToList();
 
-            if (networkInterfaceNames.Contains(networkInterfaceName)) return;
+            if (networkInterfaceNames.Contains(networkInterfaceName))
+            {
+                return;
+            }
 
             Logger.PrintError($"Network interface {networkInterfaceName} not found!");
             Logger.PrintInformational("Available network interfaces:");
             networkInterfaceNames.ForEach(Logger.PrintInformational);
-                
+
             Environment.Exit(1);
         });
 

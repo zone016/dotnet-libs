@@ -4,5 +4,5 @@ namespace Zone016.Cookie.Shared.Packet;
 
 public class Packet
 {
-    
+
 }

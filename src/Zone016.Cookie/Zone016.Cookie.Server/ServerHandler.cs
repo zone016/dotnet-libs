@@ -46,7 +46,7 @@ internal class ServerHandler
         }
 
         Logger.PrintInformational($"New session from {ip.Address}:{ip.Port}");
-        
+
         var stream = client.GetStream();
         var buffer = new byte[1024];
 
