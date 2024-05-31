@@ -10,18 +10,18 @@ No geral, você sempre vai precisar da última LTS do dotnet SDK/runtime dispon�
 
 Não vamos listar aqui coisas de teste, então segue a lista:
 
-| **Namespace**                                           | **Descrição**                                                                                   |
-| ------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| [**`Zone016.Nexus`**](./Zone016.Nexus)                  | Cliente minimalista da API do [Nexus OSS](https://www.sonatype.com/products/sonatype-nexus-oss) |
-| [**`Zone016.Nexus.Schema`**](./Zone016.Nexus.Schema/)   | Esquemas de dados para o cliente do Nexus OSS                                                   |
-| [**`Zone016.Printer`**](./Zone016.Printer/)             | Uma forma menos ruim de lidar com *stdout* e *stderr*                                           |
-| [**`Zone016.Process`**](./Zone016.Process/)             | Abstrações para processos e execução de comandos                                                |
-| [**`Zone016.Project`**](./Zone016.Project/)             | Coisas para lidar com projetos dotnet e suas particularidades                                   |
-| [**`Zone016.Reflector`**](./Zone016.Reflector/)         | Uma DSL para reflexão de tipos e objetos                                                        |
-| [**`Zone016.Boxer`**](./Zone016.Boxer/)                 | Cliente da API do HTB                                                                           |
-| [**`Zone016.Boxer.Schema`**](./Zone016.Boxer.Schema/)   | Esquemas de dados da API do HTB                                                                 |
-| [**`Zone016.Cookie.Client`**](./Zone016.Cookie.Client/) | Cliente para as paradas de *revshell*                                                           |
-| [**`Zone016.Cookie.Server`**](./Zone016.Cookie.Server/) | Servidor para gerenciar as *revshell*                                                           |
+| **Namespace**                                                              | **Descrição**                                                                                   |
+| -------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| [**`Zone016.Nexus`**](./src/Zone016.Nexus/Zone016.Nexus)                   | Cliente minimalista da API do [Nexus OSS](https://www.sonatype.com/products/sonatype-nexus-oss) |
+| [**`Zone016.Nexus.Schema`**](./src/Zone016.Nexus/Zone016.Nexus.Schema/)    | Esquemas de dados para o cliente do Nexus OSS                                                   |
+| [**`Zone016.Printer`**](./src/Zone016.Printer/)                            | Uma forma menos ruim de lidar com *stdout* e *stderr*                                           |
+| [**`Zone016.Process`**](./src/Zone016.Process/)                            | Abstrações para processos e execução de comandos                                                |
+| [**`Zone016.Project`**](./src/Zone016.Project/)                            | Coisas para lidar com projetos dotnet e suas particularidades                                   |
+| [**`Zone016.Reflector`**](./src/Zone016.Reflector/)                        | Uma DSL para reflexão de tipos e objetos                                                        |
+| [**`Zone016.Boxer`**](./src/Zone016.Boxer/)                                | Cliente da API do HTB                                                                           |
+| [**`Zone016.Boxer.Schema`**](./src/Zone016.Boxer/Zone016.Boxer.Schema/)    | Esquemas de dados da API do HTB                                                                 |
+| [**`Zone016.Cookie.Client`**](./src/Zone016.Cookie/Zone016.Cookie.Client/) | Cliente para as paradas de *revshell*                                                           |
+| [**`Zone016.Cookie.Server`**](./src/Zone016.Cookie/Zone016.Cookie.Server/) | Servidor para gerenciar as *revshell*                                                           |
 
 Projetos marcados com `*` na primeira coluna da tabela não **respondemos *issues*** devido a sua implementação ser exclusiva.
 
