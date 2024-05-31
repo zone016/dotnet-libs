@@ -1,8 +1,16 @@
 repos:
   - repo: local
     hooks:
+      - id: dotnet-restore
+        name: Restore dotnet dependencies
+        entry: dotnet restore
+        language: system
+        files: '\.(cs|csproj|sln)$'
+        stages: [pre-commit]
+
       - id: dotnet-format
         name: Format dotnet files
         entry: dotnet format -v n
         language: system
         files: '\.(cs|csproj|sln)$'
+        stages: [pre-commit]
