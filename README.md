@@ -20,9 +20,6 @@ Não vamos listar aqui coisas de teste, então segue a lista:
 | [**`Zone016.Reflector`**](./Zone016.Reflector/)         | Uma DSL para reflexão de tipos e objetos                                                        |
 | [**`Zone016.Boxer`**](./Zone016.Boxer/)                 | Cliente da API do HTB                                                                           |
 | [**`Zone016.Boxer.Schema`**](./Zone016.Boxer.Schema/)   | Esquemas de dados da API do HTB                                                                 |
-| [**`Zone016.Notion`**](./Zone016.Notion/)               | Cliente (bem vagagundo) da API do Notion                                                        |
-| [**`Zone016.Notion.Schema`**](./Zone016.Notion.Schema/) | Esquemas (minificados) de dados da API do Notion                                                |
-| [**`Zone016.Clock`\***](./Zone016.Clock/)               | Sincronizador do HTB para o Notion                                                              |
 | [**`Zone016.Cookie.Client`**](./Zone016.Cookie.Client/) | Cliente para as paradas de *revshell*                                                           |
 | [**`Zone016.Cookie.Server`**](./Zone016.Cookie.Server/) | Servidor para gerenciar as *revshell*                                                           |
 
