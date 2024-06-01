@@ -4,7 +4,7 @@ namespace Zone016.Native;
 
 public static class User32
 {
-/// <summary>
+    /// <summary>
     /// Registers a window class for subsequent use in calls to the CreateWindow or CreateWindowEx function.
     /// </summary>
     /// <param name="lpwcx">A pointer to a WNDCLASSEX structure.</param>
@@ -38,7 +38,7 @@ public static class User32
     /// <param name="lpParam">A pointer to a value to be passed to the window through the CREATESTRUCT structure.</param>
     /// <returns>If the function succeeds, the return value is a handle to the new window. If the function fails, the return value is IntPtr.Zero.</returns>
     [DllImport("User32", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CreateWindowExW")]
-    public static extern IntPtr CreateWindowEx(int dwExStyle, uint lpClassName, string lpWindowName, WindowStyle dwStyle, int x, int y, int nWidth, int nHeight, IntPtr hWndParent, IntPtr hMenu, IntPtr hInstance, IntPtr lpParam);
+    public static extern IntPtr CreateWindowEx(int dwExStyle, uint lpClassName, string? lpWindowName, WindowStyle dwStyle, int x, int y, int nWidth, int nHeight, IntPtr hWndParent, IntPtr hMenu, IntPtr hInstance, IntPtr lpParam);
 
     /// <summary>
     /// Destroys the specified window.
@@ -88,7 +88,7 @@ public static class User32
     /// <param name="wMsgFilterMax">The integer value of the highest message value to be retrieved.</param>
     /// <returns>If the function retrieves a message other than WM_QUIT, the return value is nonzero. If the function retrieves the WM_QUIT message, the return value is zero. If there is an error, the return value is -1.</returns>
     [DllImport("User32", SetLastError = true)]
-    public static extern int GetMessage(ref Message lpMsg, IntPtr hwnd, uint wMsgFilterMin, uint wMsgFilterMax);
+    public static extern int GetMessage(out Message lpMsg, IntPtr hwnd, uint wMsgFilterMin, uint wMsgFilterMax);
 
     /// <summary>
     /// Posts a message to the message queue of the specified thread.

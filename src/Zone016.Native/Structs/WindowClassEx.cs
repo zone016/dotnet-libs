@@ -1,7 +1,5 @@
 ﻿// Copyright (c) Zone016 Hackerspace. All Rights Reserved. Licensed under the MIT license.
 
-using Zone016.Native.Delegates;
-
 namespace Zone016.Native.Structs;
 
 /// <summary>
@@ -10,16 +8,16 @@ namespace Zone016.Native.Structs;
 [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
 public struct WindowClassEx
 {
-    public int CbSize;
-    public int Style;
-    public WndProc LpfnWndProc;
-    public int CbClsExtra;
-    public int CbWndExtra;
-    public IntPtr HInstance;
-    public IntPtr HIcon;
-    public IntPtr HCursor;
-    public IntPtr HbrBackground;
-    public string LpszMenuName;
-    public string LpszClassName;
-    public IntPtr HIconSm;
+    public uint cbSize;
+    public int style;
+    public IntPtr lpfnWndProc;
+    public int cbClsExtra;
+    public int cbWndExtra;
+    public IntPtr hInstance;
+    public IntPtr hIcon;
+    public IntPtr hCursor;
+    public IntPtr hbrBackground;
+    public string? lpszMenuName;
+    public string lpszClassName;
+    public IntPtr hIconSm;
 }
