@@ -2,7 +2,7 @@
 
 namespace Zone016.Octopus.Interfaces;
 
-public interface IOctopus : IDisposable
+public interface IHotKeyManager : IDisposable
 {
 
     event EventHandler<KeyPressedEventArgs>? KeyPressed;

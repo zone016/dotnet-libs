@@ -2,20 +2,23 @@
 
 namespace Zone016.Octopus;
 
-public sealed class Octopus : IOctopus
+public sealed class HotKeyManager : IHotKeyManager
 {
     private const uint KeyCombination = 0x312u;
     private const uint RegisterKey = 0x0400u;
     private const uint UnregisterKey = 0x0401u;
 
     private static readonly string s_assemblyName = Assembly.GetExecutingAssembly().GetName().Name!;
-    private static readonly Lazy<Octopus> s_lazyInstance = new(() => new Octopus());
 
     private readonly (Thread, IntPtr) _messageLoopThread;
 
     public event EventHandler<KeyPressedEventArgs>? KeyPressed;
-    public static Octopus Instance => s_lazyInstance.Value;
 
+    public HotKeyManager()
+    {
+        _messageLoopThread = InitializeMessageLoop();
+    }
+    
     public IRegistration Register(Modifiers modifiers, VirtualKeyCode key)
     {
         var (_, windowHandle) = _messageLoopThread;
@@ -185,11 +188,6 @@ public sealed class Octopus : IOctopus
     private void OnKeyCombinationPressed(KeyPressedEventArgs e)
     {
         KeyPressed?.Invoke(this, e);
-    }
-
-    private Octopus()
-    {
-        _messageLoopThread = InitializeMessageLoop();
     }
 
     public void Dispose()

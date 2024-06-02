@@ -3,13 +3,13 @@
 namespace Zone016.Octopus.Tests;
 
 [TestClass]
-public class IntegrationTestOfOctopus
+public class IntegrationTestOfHotKeyManager
 {
     [TestMethod]
     public void TestThreadCreation()
     {
-        var octopus = Octopus.Instance;
-        var registration = octopus.Register(Modifiers.Alt, VirtualKeyCode.KeyZ);
+        var manager = new HotKeyManager();
+        var registration = manager.Register(Modifiers.Alt, VirtualKeyCode.KeyZ);
 
         Assert.IsNotNull(registration);
         Assert.IsTrue(registration.IsSuccessful);
@@ -65,7 +65,7 @@ public class IntegrationTestOfOctopus
             }
         }
 
-        octopus.Dispose();
+        manager.Dispose();
         registration.Dispose();
 
         Assert.IsTrue(found);
