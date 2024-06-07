@@ -19,12 +19,12 @@ public class PortOptionBuilder : IOptionBuilder<int[]>
             {
                 if (!int.TryParse(token.Value, out var port))
                 {
-                    Logger.PrintError($"The port number {token.Value} is not a valid number!");
+                    Printer.WriteError($"The port number {token.Value} is not a valid number!");
                 }
 
                 if (port is < IPEndPoint.MinPort or > IPEndPoint.MaxPort)
                 {
-                    Logger.PrintError($"The port number {port} is out of range!");
+                    Printer.WriteError($"The port number {port} is out of range!");
                     Environment.Exit(1);
                 }
             }

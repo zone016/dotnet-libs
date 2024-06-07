@@ -12,7 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Zone016.Printer\Zone016.Printer.csproj" />
+      <ProjectReference Include="..\..\Zone016.Typer\Zone016.Typer.csproj" />
     </ItemGroup>
   
 </Project>

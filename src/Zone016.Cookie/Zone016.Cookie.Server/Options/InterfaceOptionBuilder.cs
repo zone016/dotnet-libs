@@ -26,7 +26,7 @@ public class InterfaceOptionBuilder : IOptionBuilder<string>
             var networkInterfaceName = result.GetValueOrDefault<string>();
             if (string.IsNullOrWhiteSpace(networkInterfaceName))
             {
-                Logger.PrintError("No network interface specified!");
+                Printer.WriteError("No network interface specified!");
                 Environment.Exit(1);
             }
 
@@ -39,9 +39,9 @@ public class InterfaceOptionBuilder : IOptionBuilder<string>
                 return;
             }
 
-            Logger.PrintError($"Network interface {networkInterfaceName} not found!");
-            Logger.PrintInformational("Available network interfaces:");
-            networkInterfaceNames.ForEach(Logger.PrintInformational);
+            Printer.WriteError($"Network interface {networkInterfaceName} not found!");
+            Printer.Write("Available network interfaces:");
+            networkInterfaceNames.ForEach(name => Printer.Write(name));
 
             Environment.Exit(1);
         });

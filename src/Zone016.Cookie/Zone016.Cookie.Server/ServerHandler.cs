@@ -22,16 +22,16 @@ internal class ServerHandler
         try
         {
             Server.Start();
-            Logger.PrintInformational("Server started. Press CTRL+C to stop...");
+            Printer.Write("Server started. Press CTRL+C to stop...");
 
             await Server.AcceptClientsAsync(HandleClientAsync);
 
             Server.Stop();
-            Logger.PrintInformational("Server stopped gracefully.");
+            Printer.Write("Server stopped gracefully.");
         }
         catch (OperationCanceledException)
         {
-            Logger.PrintWarning("Cancellation requested, stopping server...");
+            Printer.WriteWarning("Cancellation requested, stopping server...");
             Server.Stop();
         }
     }
@@ -41,11 +41,11 @@ internal class ServerHandler
         var connection = client.Client.RemoteEndPoint;
         if (connection is not IPEndPoint ip)
         {
-            Logger.PrintWarning("Received a invalid connection attempt.");
+            Printer.WriteWarning("Received a invalid connection attempt.");
             return;
         }
 
-        Logger.PrintInformational($"New session from {ip.Address}:{ip.Port}");
+        Printer.Write($"New session from {ip.Address}:{ip.Port}");
 
         var stream = client.GetStream();
         var buffer = new byte[1024];
@@ -60,7 +60,7 @@ internal class ServerHandler
         }
         catch (OperationCanceledException)
         {
-            Logger.PrintInformational("Client handling canceled.");
+            Printer.Write("Client handling canceled.");
         }
     }
 }

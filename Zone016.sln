@@ -31,7 +31,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zone016.Osv.Client", "src\Z
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zone016.Osv.Schema", "src\Zone016.Osv\Zone016.Osv.Schema\Zone016.Osv.Schema.csproj", "{22FB89DD-E1AE-4F31-AA7C-771742B97296}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zone016.Printer", "src\Zone016.Printer\Zone016.Printer.csproj", "{1AB09355-E4E6-4101-991F-22BD87E548B5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zone016.Typer", "src\Zone016.Typer\Zone016.Typer.csproj", "{1AB09355-E4E6-4101-991F-22BD87E548B5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zone016.Process", "src\Zone016.Process\Zone016.Process.csproj", "{C490E2E3-2BBD-4BA9-8DB9-A4F9D10F2388}"
 EndProject

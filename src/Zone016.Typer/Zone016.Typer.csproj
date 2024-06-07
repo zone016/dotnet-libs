@@ -5,14 +5,15 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <IsAotCompatible>true</IsAotCompatible>
+        <RootNamespace>Zone016.Typer</RootNamespace>
     </PropertyGroup>
 
     <PropertyGroup>
-        <PackageId>Zone016.Printer</PackageId>
-        <Version>0.1.0</Version>
+        <PackageId>Zone016.Typer</PackageId>
+        <Version>0.2.0</Version>
         <Authors>6a6f6a6f</Authors>
         <Company>Zone016</Company>
-        <Description>Printer is a minimalistic library to print stuff without external dependencies.</Description>
+        <Description>Typer is a minimalistic library to print stuff without external dependencies.</Description>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/zone016/dotnet-libs</PackageProjectUrl>
         <RepositoryUrl>https://github.com/zone016/dotnet-libs.git</RepositoryUrl>

@@ -9,4 +9,4 @@ global using System.Net.Sockets;
 global using Zone016.Cookie.Server;
 global using Zone016.Cookie.Server.Interfaces;
 global using Zone016.Cookie.Server.Options;
-global using Zone016.Printer;
+global using Zone016.Typer;

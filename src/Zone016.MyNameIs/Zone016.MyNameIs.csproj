@@ -16,4 +16,8 @@
     <JsonSerializerIsReflectionEnabledByDefault>true</JsonSerializerIsReflectionEnabledByDefault>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Zone016.Typer\Zone016.Typer.csproj" />
+  </ItemGroup>
+
 </Project>

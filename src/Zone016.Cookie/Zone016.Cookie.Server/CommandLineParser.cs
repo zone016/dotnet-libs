@@ -28,7 +28,7 @@ internal static class CommandLineParser
                 .First(ipAddressInformation => ipAddressInformation.Address.AddressFamily == AddressFamily.InterNetwork)
                 .Address;
 
-            Logger.PrintInformational(
+            Printer.Write(
                 $"Starting server at {address} from interface {networkInterface.Name} ({networkInterface.Description})...");
 
             var serverHandler = new ServerHandler(address, ports);
@@ -39,7 +39,7 @@ internal static class CommandLineParser
             .UseDefaults()
             .UseExceptionHandler((exception, context) =>
             {
-                Logger.PrintError(exception.Message);
+                Printer.WriteError(exception.Message);
                 context.ExitCode = 1;
             });
 
