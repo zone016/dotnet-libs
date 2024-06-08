@@ -168,7 +168,6 @@ public static class User32
     [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
     public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
 
-
     /// <summary>
     /// Retrieves a handle to the top-level window whose class name and window name match the specified strings.
     /// </summary>
