@@ -109,7 +109,7 @@ public class Memory : IDisposable
         
         if (!Kernel32.ReadProcessMemory(_handle, baseAddress, buffer, buffer.Length, out var totalBytesRead))
         {
-            if (!reThornWin32Exception) return Array.Empty<byte>();
+            if (!reThornWin32Exception) return [];
             
             var error = Marshal.GetLastWin32Error();
             throw new Win32Exception($"Unable to read memory at 0x{baseAddress:X}, returned {error}.");
