@@ -1,5 +1,7 @@
 ﻿// Copyright (c) Zone016 Hackerspace. All Rights Reserved. Licensed under the MIT license.
 
+using System.Text;
+
 namespace Zone016.Native;
 
 public static class User32
@@ -127,4 +129,62 @@ public static class User32
     /// <returns>The return value specifies the result of the message processing and depends on the message sent.</returns>
     [DllImport("User32", SetLastError = true)]
     public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
+    /// <summary>
+    /// Changes the text of the specified window's title bar.
+    /// </summary>
+    /// <param name="hWnd">Handle to the window or control.</param>
+    /// <param name="lpString">The new title or control text.</param>
+    /// <returns>If the function succeeds, the return value is nonzero. If the function fails, the return value is zero.</returns>
+    [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+    public static extern bool SetWindowText(IntPtr hWnd, string lpString);
+
+    /// <summary>
+    /// Retrieves information about the specified window.
+    /// </summary>
+    /// <param name="hWnd">Handle to the window and, indirectly, the class to which the window belongs.</param>
+    /// <param name="nIndex">Specifies the zero-based offset to the value to be retrieved.</param>
+    /// <returns>If the function succeeds, the return value is the requested value. If the function fails, the return value is zero.</returns>
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+
+    /// <summary>
+    /// Changes an attribute of the specified window.
+    /// </summary>
+    /// <param name="hWnd">Handle to the window and, indirectly, the class to which the window belongs.</param>
+    /// <param name="nIndex">Specifies the zero-based offset to the value to be set.</param>
+    /// <param name="dwNewLong">Specifies the replacement value.</param>
+    /// <returns>If the function succeeds, the return value is the previous value of the specified 32-bit integer. If the function fails, the return value is zero.</returns>
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+
+    /// <summary>
+    /// Retrieves the name of the class to which the specified window belongs.
+    /// </summary>
+    /// <param name="hWnd">Handle to the window and, indirectly, the class to which the window belongs.</param>
+    /// <param name="lpClassName">The class name string.</param>
+    /// <param name="nMaxCount">The length of the buffer.</param>
+    /// <returns>If the function succeeds, the return value is the number of characters copied to the buffer. If the function fails, the return value is zero.</returns>
+    [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+    public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
+
+
+    /// <summary>
+    /// Retrieves a handle to the top-level window whose class name and window name match the specified strings.
+    /// </summary>
+    /// <param name="lpClassName">Class name or a class atom created by a previous call to the RegisterClass or RegisterClassEx function.</param>
+    /// <param name="lpWindowName">Window name (the window's title).</param>
+    /// <returns>If the function succeeds, the return value is a handle to the window that has the specified class name and window name. If the function fails, the return value is IntPtr.Zero.</returns>
+    [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+    public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+    /// <summary>
+    /// Changes an attribute of the specified window.
+    /// </summary>
+    /// <param name="hWnd">Handle to the window and, indirectly, the class to which the window belongs.</param>
+    /// <param name="nIndex">Specifies the zero-based offset to the value to be set.</param>
+    /// <param name="dwNewLong">Specifies the replacement value.</param>
+    /// <returns>If the function succeeds, the return value is the previous value of the specified 32-bit integer. If the function fails, the return value is zero.</returns>
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern int SetWindowLong(IntPtr hWnd, WindowLongIndex nIndex, int dwNewLong);
 }

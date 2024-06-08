@@ -149,23 +149,22 @@ public class Runner
     /// <summary>
     /// Asynchronously runs the configured external process.
     /// </summary>
-    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+    /// <returns>A <see cref="Task{Process}"/> representing the asynchronous operation.</returns>
     /// <exception cref="InvalidOperationException">
     /// Thrown when the process cannot be started.
     /// </exception>
     /// <exception cref="TimeoutException">
-    /// Thrown when the process does not complete within the configured timeout.
+    /// Thrown when the process does not start within the configured timeout.
     /// </exception>
     /// <remarks>
     /// This method configures and starts an external process based on the properties set
     /// in the <see cref="Runner"/> instance. It sets up callbacks for standard output and
     /// standard error if they have been configured. The method also respects the configured
-    /// timeout and cancellation token.
+    /// timeout and cancellation token for starting the process.
     /// 
-    /// Note that the process is killed if it doesn't complete within the configured timeout
-    /// or if a cancellation is triggered.
+    /// Note that the process is returned as soon as it is started successfully.
     /// </remarks>
-    public async Task RunAsync()
+    public async Task<System.Diagnostics.Process> RunAsync()
     {
         var processStartInfo = new ProcessStartInfo
         {
@@ -210,39 +209,71 @@ public class Runner
             };
         }
 
-        if (!process.Start())
+        var cancellationSource = new CancellationTokenSource(_timeout);
+        var linkedTokenSource =
+            CancellationTokenSource.CreateLinkedTokenSource(_cancellationToken, cancellationSource.Token);
+
+        try
         {
-            throw new InvalidOperationException();
-        }
-
-        if (_outputDataReceivedCallback is not null)
-        {
-            process.BeginOutputReadLine();
-        }
-
-        if (_errorDataReceivedCallback is not null)
-        {
-            process.BeginErrorReadLine();
-        }
-
-        await using (_cancellationToken.Register(() =>
-                     {
-                         if (!process.HasExited)
-                         {
-                             process.Kill();
-                         }
-                     }))
-        {
-            var delayTask = Task.Delay(_timeout, _cancellationToken);
-            var processTask = Task.Run(() => process.WaitForExit(), _cancellationToken);
-
-            var completedTask = await Task.WhenAny(processTask, delayTask);
-
-            if (completedTask == delayTask)
+            var startTask = Task.Run(() =>
             {
-                process.Kill();
+                if (!process.Start())
+                {
+                    throw new InvalidOperationException();
+                }
+
+                if (_outputDataReceivedCallback is not null)
+                {
+                    process.BeginOutputReadLine();
+                }
+
+                if (_errorDataReceivedCallback is not null)
+                {
+                    process.BeginErrorReadLine();
+                }
+            }, linkedTokenSource.Token);
+
+            // Wait for the process to start or timeout.
+            await Task.WhenAny(startTask, Task.Delay(_timeout, linkedTokenSource.Token));
+
+            if (startTask.IsFaulted)
+            {
+                // If there was an error starting the process, rethrow the exception.
+                throw startTask.Exception!.GetBaseException();
+            }
+
+            if (!startTask.IsCompleted)
+            {
+                // If the process did not start within the timeout, kill it and throw a TimeoutException.
+                if (!process.HasExited)
+                {
+                    process.Kill();
+                }
+
                 throw new TimeoutException();
             }
+
+            // If the process started successfully, return it.
+            return process;
+        }
+        catch (OperationCanceledException) when (cancellationSource.IsCancellationRequested)
+        {
+            // Handle the timeout case specifically.
+            if (!process.HasExited)
+            {
+                process.Kill();
+            }
+
+            throw new TimeoutException();
+        }
+        catch
+        {
+            if (!process.HasExited)
+            {
+                process.Kill();
+            }
+
+            throw;
         }
     }
 

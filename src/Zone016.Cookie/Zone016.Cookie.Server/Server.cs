@@ -6,57 +6,57 @@ internal class Server(IPAddress address, IEnumerable<int> ports, CancellationTok
 {
     private readonly List<TcpListener> _listeners = [];
 
-    public void Start()
+public void Start()
+{
+    foreach (var port in ports)
     {
-        foreach (var port in ports)
-        {
-            var listener = new TcpListener(address, port);
-            listener.Start();
-            _listeners.Add(listener);
-        }
+        var listener = new TcpListener(address, port);
+        listener.Start();
+        _listeners.Add(listener);
+    }
+}
+
+public void Stop()
+{
+    foreach (var listener in _listeners)
+    {
+        listener.Stop();
     }
 
-    public void Stop()
+    _listeners.Clear();
+}
+
+public async Task AcceptClientsAsync(Func<TcpClient, Task> onClientAccepted)
+{
+    while (!cancellationToken.IsCancellationRequested)
     {
+        var connectionTasks = new List<Task<TcpClient>>();
         foreach (var listener in _listeners)
         {
-            listener.Stop();
+            if (!listener.Pending())
+            {
+                continue;
+            }
+
+            connectionTasks.Add(listener.AcceptTcpClientAsync(cancellationToken).AsTask());
         }
 
-        _listeners.Clear();
-    }
-
-    public async Task AcceptClientsAsync(Func<TcpClient, Task> onClientAccepted)
-    {
-        while (!cancellationToken.IsCancellationRequested)
+        if (connectionTasks.Count > 0)
         {
-            var connectionTasks = new List<Task<TcpClient>>();
-            foreach (var listener in _listeners)
+            try
             {
-                if (!listener.Pending())
-                {
-                    continue;
-                }
-
-                connectionTasks.Add(listener.AcceptTcpClientAsync(cancellationToken).AsTask());
+                var completedTask = await Task.WhenAny(connectionTasks);
+                await onClientAccepted(await completedTask);
             }
-
-            if (connectionTasks.Count > 0)
+            catch (OperationCanceledException)
             {
-                try
-                {
-                    var completedTask = await Task.WhenAny(connectionTasks);
-                    await onClientAccepted(await completedTask);
-                }
-                catch (OperationCanceledException)
-                {
-                    break;
-                }
-            }
-            else
-            {
-                await Task.Delay(100, cancellationToken);
+                break;
             }
         }
+        else
+        {
+            await Task.Delay(100, cancellationToken);
+        }
     }
+}
 }

@@ -18,7 +18,7 @@ public sealed class HotKeyManager : IHotKeyManager
     {
         _messageLoopThread = InitializeMessageLoop();
     }
-    
+
     public IRegistration Register(Modifiers modifiers, VirtualKeyCode key)
     {
         var (_, windowHandle) = _messageLoopThread;

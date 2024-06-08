@@ -9,12 +9,12 @@ internal static class HostApplicationBuilderExtensions
         builder.Services.AddHostedService<KeyListener>();
         builder.Services.AddWindowsService();
     }
-    
+
     public static void AddSingletons(this HostApplicationBuilder builder)
     {
         builder.Services.AddSingleton<IHotKeyManager, HotKeyManager>();
     }
-    
+
     public static void EnsureEnvironmentSetup(this HostApplicationBuilder _)
     {
         if (!Directory.Exists(Constants.HomePath))

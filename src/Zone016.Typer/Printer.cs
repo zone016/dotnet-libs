@@ -10,11 +10,11 @@ public static class Printer
     private const char OpenTag = '[';
     private const char CloseTag = ']';
 
-    private static readonly string[] s_operations = 
-        [
-            "bold", "b",
-            "italic", "i"
-        ];
+    private static readonly string[] s_operations =
+    [
+        "bold", "b",
+        "italic", "i"
+    ];
 
     private static readonly Dictionary<string, string> s_colorAliases = new()
     {
@@ -47,10 +47,8 @@ public static class Printer
         writer.Write(text);
     }
 
-    public static void Print(string message, bool sanitize = true, TextWriter? writer = default)
+    public static void Write(string message, TextWriter? writer = default)
     {
-        message = sanitize ? Sanitize(message) : message;
-
         var openTags = new Stack<string>();
         var index = 0;
 
@@ -111,7 +109,7 @@ public static class Printer
                             var color = isAliasColorTag ? s_colorAliases[openingTagName] : openingTagName;
                             ApplyHexColor(color, writer);
                         }
-                        
+
                         if (!isOtherTag) continue;
                         switch (openingTagName)
                         {
@@ -149,7 +147,7 @@ public static class Printer
 
         if (writer is null)
         {
-            WriteLine();
+            Console.WriteLine();
             return;
         }
 
@@ -173,6 +171,7 @@ public static class Printer
         var r = int.Parse(hex.Substring(1, 2), System.Globalization.NumberStyles.HexNumber);
         var g = int.Parse(hex.Substring(3, 2), System.Globalization.NumberStyles.HexNumber);
         var b = int.Parse(hex.Substring(5, 2), System.Globalization.NumberStyles.HexNumber);
+        
         return $"{r};{g};{b}";
     }
 
@@ -187,7 +186,7 @@ public static class Printer
 
         writer.Write(BoldCode);
     }
-    
+
     private static void ResetBold(TextWriter? writer)
     {
         const string ResetCode = "\x1b[22m"; // Reset bold
@@ -199,7 +198,7 @@ public static class Printer
 
         writer.Write(ResetCode);
     }
-    
+
     private static void ApplyItalic(TextWriter? writer)
     {
         const string ItalicCode = "\x1b[3m";
@@ -211,7 +210,7 @@ public static class Printer
 
         writer.Write(ItalicCode);
     }
-    
+
     private static void ResetItalic(TextWriter? writer)
     {
         const string ResetCode = "\x1b[23m"; // Reset italic
@@ -231,31 +230,31 @@ public static class Printer
         var sanitized = message
             .Replace("[", string.Empty)
             .Replace("]", string.Empty);
-        
+
         return sanitized;
     }
 
     public static void WriteSuccess(string message, bool sanitize = true)
     {
         message = sanitize ? Sanitize(message) : message;
-        Print($"[b green]suc:[/] {message}");
+        Write($"[b green]suc:[/] {message}");
     }
 
-    public static void Write(string message, bool sanitize = true)
+    public static void WriteLine(string message, bool sanitize = true)
     {
         message = sanitize ? Sanitize(message) : message;
-        Print($"[b dark-gray]inf:[/] {message}");
+        Write($"[b dark-gray]inf:[/] {message}");
     }
 
     public static void WriteWarning(string message, bool sanitize = true)
     {
         message = sanitize ? Sanitize(message) : message;
-        Print($"[b i yellow]war[/][yellow]:[/] {message}");
+        Write($"[b i yellow]war[/][yellow]:[/] {message}");
     }
 
     public static void WriteError(string message, bool sanitize = true)
     {
         message = sanitize ? Sanitize(message) : message;
-        Print($"[b i red]err[/][red]:[/] {message}", writer: Error);
+        Write($"[b i red]err[/][red]:[/] {message}", writer: Error);
     }
 }

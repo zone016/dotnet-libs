@@ -46,4 +46,13 @@ public static class Kernel32
     /// <returns>True if successful; otherwise, false.</returns>
     [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
     public static extern bool GetThreadDescription(IntPtr hThread, out IntPtr ppszThreadDescription);
+    
+    [DllImport("kernel32.dll")]
+    private static extern IntPtr CreateToolHelp32Snapshot(uint dwFlags, uint th32ProcessID);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    private static extern bool Process32First(IntPtr hSnapshot, ref ProcessEntry32 lppe);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    private static extern bool Process32Next(IntPtr hSnapshot, ref ProcessEntry32 lppe);
 }

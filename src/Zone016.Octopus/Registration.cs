@@ -6,17 +6,17 @@ public class Registration(IntPtr result, IntPtr hWnd) : IRegistration
 {
     private const uint UnregisterKey = 0x0401u;
 
-    public bool IsSuccessful => checked((int)result) != -1;
-    public int Id => checked((int)result);
+public bool IsSuccessful => checked((int)result) != -1;
+public int Id => checked((int)result);
 
-    public void Dispose()
+public void Dispose()
+{
+    checked
     {
-        checked
+        if ((int)result != -1)
         {
-            if ((int)result != -1)
-            {
-                User32.SendMessage(hWnd, UnregisterKey, result, IntPtr.Zero);
-            }
+            User32.SendMessage(hWnd, UnregisterKey, result, IntPtr.Zero);
         }
     }
+}
 }
