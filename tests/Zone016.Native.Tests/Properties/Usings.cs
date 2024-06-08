@@ -2,4 +2,5 @@
 
 global using System.Diagnostics;
 
+global using Zone016.Native.Cat;
 global using Zone016.Native.Dynamite;

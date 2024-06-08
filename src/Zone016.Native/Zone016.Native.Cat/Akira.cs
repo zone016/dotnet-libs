@@ -93,13 +93,14 @@ public class Akira(IntPtr processHandle)
 
         private void WriteVirtualMemory(IntPtr baseAddress, IntPtr buffer, int size)
         {
+            var numberOfBytesWritten = Marshal.AllocHGlobal(sizeof(int));
             var parameters = new object[]
             {
                 processHandle,
                 baseAddress,
                 buffer,
                 size,
-                IntPtr.Zero
+                numberOfBytesWritten
             };
 
             var status = Generic.DynamicApiInvoke<NTStatus>(
@@ -113,11 +114,11 @@ public class Akira(IntPtr processHandle)
                 throw new Win32Exception($"Unable to write memory at 0x{baseAddress:X}, returned {status}.");
             }
 
-            var writtenBuffer = (IntPtr)parameters[4];
-            if (writtenBuffer.ToInt32() != size)
+            var writtenBuffer = Marshal.ReadInt32(numberOfBytesWritten);
+            if (writtenBuffer != size)
             {
                 throw new Win32Exception(
-                    $"Written bytes differ from the API (struct size is {size}, but the return was {writtenBuffer.ToInt32()})"
+                    $"Written bytes differ from the API (struct size is {size}, but the return was {writtenBuffer})"
                 );
             }
         }

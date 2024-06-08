@@ -1,7 +1,5 @@
 ﻿// Copyright (c) Zone016 Hackerspace. All Rights Reserved. Licensed under the MIT license.
 
-using Zone016.Native.Cat;
-
 namespace Zone016.Native.Tests;
 
 [TestClass]
@@ -52,7 +50,8 @@ public class UnitTestOfCat
     [TestMethod]
     public void TestOfMemoryWriting()
     {
-        var processHandle = Process.GetCurrentProcess().Handle;
+        var currentProcess = Process.GetCurrentProcess();
+        var processHandle = currentProcess.Handle;
         var akira = new Akira(processHandle);
 
         const int Pattern = int.MaxValue;
