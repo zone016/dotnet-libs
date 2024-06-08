@@ -16,7 +16,7 @@
   </PropertyGroup>
   
   <PropertyGroup>
-    <NoWarn>CA1401;SYSLIB1054</NoWarn>
+    <NoWarn>CA1401;SYSLIB1054;IL2091</NoWarn>
   </PropertyGroup>
 
 </Project>
