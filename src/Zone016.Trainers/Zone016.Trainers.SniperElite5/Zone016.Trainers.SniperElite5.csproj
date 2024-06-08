@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Zone016.Native\Zone016.Native.csproj" />
+    <ProjectReference Include="..\..\Zone016.Native\Zone016.Native\Zone016.Native.csproj" />
     <ProjectReference Include="..\..\Zone016.Typer\Zone016.Typer.csproj" />
   </ItemGroup>
 

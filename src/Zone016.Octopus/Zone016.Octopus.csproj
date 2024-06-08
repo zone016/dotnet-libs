@@ -14,9 +14,9 @@
       <UseSystemResourceKeys>true</UseSystemResourceKeys>
       <JsonSerializerIsReflectionEnabledByDefault>true</JsonSerializerIsReflectionEnabledByDefault>
     </PropertyGroup>
-  
-    <ItemGroup>
-      <ProjectReference Include="..\Zone016.Native\Zone016.Native.csproj" />
-    </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Zone016.Native\Zone016.Native\Zone016.Native.csproj" />
+    </ItemGroup>
+  
 </Project>

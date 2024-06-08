@@ -21,7 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\Zone016.Native\Zone016.Native.csproj" />
+      <ProjectReference Include="..\..\src\Zone016.Native\Zone016.Native\Zone016.Native.csproj" />
     </ItemGroup>
 
 </Project>
