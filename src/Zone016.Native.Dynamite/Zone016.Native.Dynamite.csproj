@@ -4,6 +4,7 @@
         <TargetFramework>net8.0-windows</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -16,7 +17,7 @@
     </PropertyGroup>
 
    <PropertyGroup>
-     <NoWarn>CA1401;SYSLIB1054;IL2091</NoWarn>
+     <NoWarn>CA1401;SYSLIB1054;IL2091;IL3050</NoWarn>
    </PropertyGroup>
   
 </Project>

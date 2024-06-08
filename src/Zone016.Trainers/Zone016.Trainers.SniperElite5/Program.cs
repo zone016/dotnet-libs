@@ -42,40 +42,32 @@ if (process.Handle == IntPtr.Zero)
     Environment.Exit(1);
 }
 
-var memory = new Referrer(process.Handle);
+var memory = new Memory(process.Id);
 
 var pointer = process.MainModule.BaseAddress + 0x02846460;
-pointer = memory.ReadVirtualMemory<IntPtr>(pointer, out var bytesRead);
-Printer.WriteLine($"Read [b]{bytesRead}[/] bytes from [b]0x{pointer:X}[/].", false);
+pointer = memory.ReadVirtualMemory<IntPtr>(pointer);
 
 pointer += 0x0;
-pointer = memory.ReadVirtualMemory<IntPtr>(pointer, out bytesRead);
-Printer.WriteLine($"Read [b]{bytesRead}[/] bytes from [b]0x{pointer:X}[/].", false);
+pointer = memory.ReadVirtualMemory<IntPtr>(pointer);
 
 pointer += 0x1F0;
-pointer = memory.ReadVirtualMemory<IntPtr>(pointer, out bytesRead);
-Printer.WriteLine($"Read [b]{bytesRead}[/] bytes from [b]0x{pointer:X}[/].", false);
+pointer = memory.ReadVirtualMemory<IntPtr>(pointer);
 
 pointer += 0x50;
-pointer = memory.ReadVirtualMemory<IntPtr>(pointer, out bytesRead);
-Printer.WriteLine($"Read [b]{bytesRead}[/] bytes from [b]0x{pointer:X}[/].", false);
+pointer = memory.ReadVirtualMemory<IntPtr>(pointer);
 
 pointer += 0x110;
-pointer = memory.ReadVirtualMemory<IntPtr>(pointer, out bytesRead);
-Printer.WriteLine($"Read [b]{bytesRead}[/] bytes from [b]0x{pointer:X}[/].", false);
+pointer = memory.ReadVirtualMemory<IntPtr>(pointer);
 
 Printer.WriteSuccess($"Sniper ammo pointer found at [b]0x{pointer:X}+0x2C[/]!", false);
-var sniperAmmo = memory.ReadVirtualMemory<int>(pointer + 0x2C, out bytesRead);
-Printer.WriteLine($"Read [b]{bytesRead}[/] bytes from [b]0x{pointer:X}[/].", false);
+var sniperAmmo = memory.ReadVirtualMemory<int>(pointer + 0x2C);
 
 Printer.WriteLine($"Current sniper ammo is [b]{sniperAmmo}[/] bullets.", false);
 Printer.WriteLine("Writing the sniper ammo to [b]250[/] bullets...", false);
 
-memory.WriteVirtualMemory(pointer + 0x2C, 250, out var bytesWritten);
-Printer.WriteLine($"Written [b]{bytesWritten}[/] bytes to [b]0x{pointer:X}[/].", false);
+memory.WriteVirtualMemory(pointer + 0x2C, 250);
 
-sniperAmmo = memory.ReadVirtualMemory<int>(pointer + 0x2C, out bytesRead);
-Printer.WriteLine($"Read [b]{bytesRead}[/] bytes from [b]0x{pointer:X}[/].", false);
+sniperAmmo = memory.ReadVirtualMemory<int>(pointer + 0x2C);
 
 if (sniperAmmo != 250)
 {

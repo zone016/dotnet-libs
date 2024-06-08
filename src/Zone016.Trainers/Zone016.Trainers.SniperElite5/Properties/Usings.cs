@@ -3,4 +3,4 @@
 global using System.Diagnostics;
 
 global using Zone016.Typer;
-global using Zone016.Native.Dynamite;
+global using Zone016.Native;
