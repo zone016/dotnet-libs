@@ -6,6 +6,3 @@ global using System.Diagnostics;
 global using System.Runtime.InteropServices;
 
 global using Microsoft.Win32.SafeHandles;
-
-global using Zone016.Native.Enums;
-global using Zone016.Native.Structs;

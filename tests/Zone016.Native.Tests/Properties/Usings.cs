@@ -2,4 +2,4 @@
 
 global using System.Diagnostics;
 
-global using Zone016.Native.Enums;
+global using Zone016.Native.Dynamite;

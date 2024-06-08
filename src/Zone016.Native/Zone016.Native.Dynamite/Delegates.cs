@@ -2,8 +2,40 @@
 
 namespace Zone016.Native.Dynamite;
 
-public class Delegates
+public static class Delegates
 {
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    public delegate bool DllMain(IntPtr hinstDll, uint fdwReason, IntPtr lpvReserved);
+    public delegate bool DllMain(
+        IntPtr handle,
+        uint fdwReason,
+        IntPtr lpvReserved
+    );
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate NTStatus NtReadVirtualMemory(
+        IntPtr processHandle,
+        IntPtr baseAddress,
+        IntPtr buffer,
+        int size,
+        IntPtr numberOfBytesRead
+    );
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate NTStatus NtWriteVirtualMemory(
+        IntPtr processHandle,
+        IntPtr baseAddress,
+        IntPtr buffer,
+        int size,
+        IntPtr numberOfBytesWritten
+    );
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate NTStatus NtAllocateVirtualMemory(
+        IntPtr processHandle,
+        ref IntPtr baseAddress,
+        IntPtr zeroBits,
+        ref IntPtr regionSize,
+        AllocationType allocationType,
+        MemoryProtection protectionType
+    );
 }

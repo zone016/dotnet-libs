@@ -18,5 +18,9 @@
   <PropertyGroup>
     <NoWarn>CA1401;SYSLIB1054;IL2091</NoWarn>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Zone016.Native.Shared\Zone016.Native.Shared.csproj" />
+  </ItemGroup>
 
 </Project>

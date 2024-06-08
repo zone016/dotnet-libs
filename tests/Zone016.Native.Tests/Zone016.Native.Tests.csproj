@@ -21,6 +21,8 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\src\Zone016.Native\Zone016.Native.Cat\Zone016.Native.Cat.csproj" />
+      <ProjectReference Include="..\..\src\Zone016.Native\Zone016.Native.Dynamite\Zone016.Native.Dynamite.csproj" />
       <ProjectReference Include="..\..\src\Zone016.Native\Zone016.Native\Zone016.Native.csproj" />
     </ItemGroup>
 

@@ -1,5 +1,8 @@
 ﻿// Copyright (c) Zone016 Hackerspace. All Rights Reserved. Licensed under the MIT license.
 
+using Zone016.Native.Shared.Enums;
+using Zone016.Native.Shared.Structs;
+
 namespace Zone016.Octopus;
 
 public sealed class HotKeyManager : IHotKeyManager

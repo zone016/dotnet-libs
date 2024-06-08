@@ -1,3 +1,5 @@
+using Zone016.Native.Shared.Enums;
+
 namespace Zone016.Native.Tests;
 
 [TestClass]

@@ -1,5 +1,8 @@
 ﻿// Copyright (c) Zone016 Hackerspace. All Rights Reserved. Licensed under the MIT license.
 
+using Zone016.Native.Shared.Enums;
+using Zone016.Native.Shared.Structs;
+
 namespace Zone016.Native;
 
 public class Memory : IDisposable
@@ -103,7 +106,7 @@ public class Memory : IDisposable
         }
     }
 
-    public byte[] ReadVirtualMemory(IntPtr baseAddress, long size, bool reThornWin32Exception = true)
+    public byte[] ReadVirtualMemory(IntPtr baseAddress, int size, bool reThornWin32Exception = true)
     {
         var buffer = new byte[size];
         
@@ -308,7 +311,7 @@ public class Memory : IDisposable
                 
                 var memoryDump = ReadVirtualMemory(
                     memoryInformation.BaseAddress,
-                    memoryInformation.RegionSize.ToInt64(),
+                    memoryInformation.RegionSize.ToInt32(),
                     false
                 );
 
