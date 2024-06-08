@@ -1,8 +1,4 @@
-﻿using System.Diagnostics;
-using Zone016.Native;
-using Zone016.Typer;
-
-if (!Environment.Is64BitProcess)
+﻿if (!Environment.Is64BitProcess)
 {
     Printer.WriteError("This game requires a 64-bit build to run.");
     Environment.Exit(1);
@@ -40,31 +36,47 @@ process.Exited += (_, _) =>
     cancellationTokenSource.Cancel();
 };
 
-var memory = new Memory(process.Id);
+if (process.Handle == IntPtr.Zero)
+{
+    Printer.WriteError("Failed to get the handle of the game.");
+    Environment.Exit(1);
+}
+
+var memory = new Referrer(process.Handle);
 
 var pointer = process.MainModule.BaseAddress + 0x02846460;
-pointer = memory.ReadVirtualMemory<IntPtr>(pointer);
+pointer = memory.ReadVirtualMemory<IntPtr>(pointer, out var bytesRead);
+Printer.WriteLine($"Read [b]{bytesRead}[/] bytes from [b]0x{pointer:X}[/].", false);
 
 pointer += 0x0;
-pointer = memory.ReadVirtualMemory<IntPtr>(pointer);
+pointer = memory.ReadVirtualMemory<IntPtr>(pointer, out bytesRead);
+Printer.WriteLine($"Read [b]{bytesRead}[/] bytes from [b]0x{pointer:X}[/].", false);
 
 pointer += 0x1F0;
-pointer = memory.ReadVirtualMemory<IntPtr>(pointer);
+pointer = memory.ReadVirtualMemory<IntPtr>(pointer, out bytesRead);
+Printer.WriteLine($"Read [b]{bytesRead}[/] bytes from [b]0x{pointer:X}[/].", false);
 
 pointer += 0x50;
-pointer = memory.ReadVirtualMemory<IntPtr>(pointer);
+pointer = memory.ReadVirtualMemory<IntPtr>(pointer, out bytesRead);
+Printer.WriteLine($"Read [b]{bytesRead}[/] bytes from [b]0x{pointer:X}[/].", false);
 
 pointer += 0x110;
-pointer = memory.ReadVirtualMemory<IntPtr>(pointer);
+pointer = memory.ReadVirtualMemory<IntPtr>(pointer, out bytesRead);
+Printer.WriteLine($"Read [b]{bytesRead}[/] bytes from [b]0x{pointer:X}[/].", false);
 
 Printer.WriteSuccess($"Sniper ammo pointer found at [b]0x{pointer:X}+0x2C[/]!", false);
-var sniperAmmo = memory.ReadVirtualMemory<int>(pointer + 0x2C);
+var sniperAmmo = memory.ReadVirtualMemory<int>(pointer + 0x2C, out bytesRead);
+Printer.WriteLine($"Read [b]{bytesRead}[/] bytes from [b]0x{pointer:X}[/].", false);
 
 Printer.WriteLine($"Current sniper ammo is [b]{sniperAmmo}[/] bullets.", false);
 Printer.WriteLine("Writing the sniper ammo to [b]250[/] bullets...", false);
 
-memory.WriteVirtualMemory(pointer + 0x2C, 250);
-sniperAmmo = memory.ReadVirtualMemory<int>(pointer + 0x2C);
+memory.WriteVirtualMemory(pointer + 0x2C, 250, out var bytesWritten);
+Printer.WriteLine($"Written [b]{bytesWritten}[/] bytes to [b]0x{pointer:X}[/].", false);
+
+sniperAmmo = memory.ReadVirtualMemory<int>(pointer + 0x2C, out bytesRead);
+Printer.WriteLine($"Read [b]{bytesRead}[/] bytes from [b]0x{pointer:X}[/].", false);
+
 if (sniperAmmo != 250)
 {
     Printer.WriteError("Failed to write the sniper ammo.");
