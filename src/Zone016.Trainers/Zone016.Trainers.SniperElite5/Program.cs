@@ -1,4 +1,6 @@
-﻿if (!Environment.Is64BitProcess)
+﻿Printer.WriteLine("Sniper Elite 5 trainer in ntdll.dll");
+
+if (!Environment.Is64BitProcess)
 {
     Printer.WriteError("This game requires a 64-bit build to run.");
     Environment.Exit(1);
@@ -16,7 +18,7 @@ if (process is null)
 
 var memoryUsage = process.WorkingSet64 / 1e+9;
 
-Printer.WriteSuccess($"Game found on PID {process.Id} (with {process.Modules.Count} modules)");
+Printer.WriteSuccess($"Game found on PID {process.Id}!");
 Printer.WriteLine($"Also the game is using about [b]{memoryUsage:F}GB of your RAM[/]", false);
 
 Printer.WriteLine("Searching for the sniper ammo pointer...");
@@ -42,7 +44,7 @@ if (process.Handle == IntPtr.Zero)
     Environment.Exit(1);
 }
 
-var memory = new Memory(process.Id);
+var memory = new Akira(process.Handle);
 
 var pointer = process.MainModule.BaseAddress + 0x02846460;
 pointer = memory.ReadVirtualMemory<IntPtr>(pointer);

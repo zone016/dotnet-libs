@@ -38,4 +38,21 @@ public static class Delegates
         AllocationType allocationType,
         MemoryProtection protectionType
     );
+
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate NTStatus NtQueryInformationProcess(
+        IntPtr processHandle,
+        int processInformationClass,
+        IntPtr processInformation,
+        int processInformationLength,
+        int returnLength
+    );
+    
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate NTStatus NtOpenProcessDelegate(
+        ref IntPtr processHandle,
+        uint desiredAccess,
+        ref ObjectAttributes objectAttributes,
+        ref ClientId clientId
+    );
 }

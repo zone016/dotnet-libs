@@ -20,4 +20,7 @@ public static class Constants
     public const uint PageExecuteReadWrite = 0x40;
 
     public const uint SecImage = 0x1000000;
+    
+    public const int ProcessBasicInformation = 0;
+    public const int ProcessModuleInformation = 2;
 }

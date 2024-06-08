@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace Zone016.Native.Cat;
+﻿namespace Zone016.Native.Cat;
 
 public class Akira(IntPtr processHandle)
 {
@@ -34,8 +32,8 @@ public class Akira(IntPtr processHandle)
             Marshal.FreeHGlobal(buffer);
         }
     }
-    
-    public byte[] ReadVirtualMemory(IntPtr baseAddress, long size)
+
+    public byte[] ReadVirtualMemory(IntPtr baseAddress, int size)
     {
         var buffer = new byte[size];
         var parameters = new object[] { processHandle, baseAddress, buffer, size, IntPtr.Zero };
@@ -54,75 +52,68 @@ public class Akira(IntPtr processHandle)
 
         return buffer;
     }
-    
+
     public void WriteVirtualMemory(IntPtr baseAddress, string data)
+    {
+        var bytes = Encoding.UTF8.GetBytes(data);
+        WriteVirtualMemory(baseAddress, bytes);
+    }
+
+    public void WriteVirtualMemory<TStruct>(IntPtr baseAddress, TStruct structToWrite) where TStruct : struct
+    {
+        var size = Marshal.SizeOf<TStruct>();
+        var buffer = Marshal.AllocHGlobal(size);
+        try
         {
-            var bytes = Encoding.UTF8.GetBytes(data);
-            WriteVirtualMemory(baseAddress, bytes);
+            Marshal.StructureToPtr(structToWrite, buffer, false);
+            WriteVirtualMemory(baseAddress, buffer, size);
+        }
+        finally
+        {
+            Marshal.FreeHGlobal(buffer);
+        }
+    }
+
+    public void WriteVirtualMemory(IntPtr baseAddress, byte[] bytesToWrite)
+    {
+        var size = bytesToWrite.Length;
+        var bufferHandle = GCHandle.Alloc(bytesToWrite, GCHandleType.Pinned);
+
+        try
+        {
+            WriteVirtualMemory(baseAddress, bufferHandle.AddrOfPinnedObject(), size);
+        }
+        finally
+        {
+            bufferHandle.Free();
+        }
+    }
+
+    private void WriteVirtualMemory(IntPtr baseAddress, IntPtr buffer, int size)
+    {
+        var numberOfBytesWritten = Marshal.AllocHGlobal(sizeof(int));
+        var parameters = new object[] { processHandle, baseAddress, buffer, size, numberOfBytesWritten };
+
+        var status = Generic.DynamicApiInvoke<NTStatus>(
+            "ntdll.dll",
+            "NtWriteVirtualMemory",
+            typeof(Delegates.NtWriteVirtualMemory),
+            ref parameters);
+
+        if (status != NTStatus.Success)
+        {
+            throw new Win32Exception($"Unable to write memory at 0x{baseAddress:X}, returned {status}.");
         }
 
-        public void WriteVirtualMemory<TStruct>(IntPtr baseAddress, TStruct structToWrite) where TStruct : struct
+        var writtenBuffer = Marshal.ReadInt32(numberOfBytesWritten);
+        if (writtenBuffer != size)
         {
-            var size = Marshal.SizeOf<TStruct>();
-            var buffer = Marshal.AllocHGlobal(size);
-            try
-            {
-                Marshal.StructureToPtr(structToWrite, buffer, false);
-                WriteVirtualMemory(baseAddress, buffer, size);
-            }
-            finally
-            {
-                Marshal.FreeHGlobal(buffer);
-            }
+            throw new Win32Exception(
+                $"Written bytes differ from the API (struct size is {size}, but the return was {writtenBuffer})"
+            );
         }
+    }
 
-        public void WriteVirtualMemory(IntPtr baseAddress, byte[] bytesToWrite)
-        {
-            var size = bytesToWrite.Length;
-            var bufferHandle = GCHandle.Alloc(bytesToWrite, GCHandleType.Pinned);
-
-            try
-            {
-                WriteVirtualMemory(baseAddress, bufferHandle.AddrOfPinnedObject(), size);
-            }
-            finally
-            {
-                bufferHandle.Free();
-            }
-        }
-
-        private void WriteVirtualMemory(IntPtr baseAddress, IntPtr buffer, int size)
-        {
-            var numberOfBytesWritten = Marshal.AllocHGlobal(sizeof(int));
-            var parameters = new object[]
-            {
-                processHandle,
-                baseAddress,
-                buffer,
-                size,
-                numberOfBytesWritten
-            };
-
-            var status = Generic.DynamicApiInvoke<NTStatus>(
-                "ntdll.dll",
-                "NtWriteVirtualMemory",
-                typeof(Delegates.NtWriteVirtualMemory),
-                ref parameters);
-
-            if (status != NTStatus.Success)
-            {
-                throw new Win32Exception($"Unable to write memory at 0x{baseAddress:X}, returned {status}.");
-            }
-
-            var writtenBuffer = Marshal.ReadInt32(numberOfBytesWritten);
-            if (writtenBuffer != size)
-            {
-                throw new Win32Exception(
-                    $"Written bytes differ from the API (struct size is {size}, but the return was {writtenBuffer})"
-                );
-            }
-        }
-    
     public IntPtr AllocateVirtualMemory(int size, MemoryProtection protectionType = MemoryProtection.ExecuteReadWrite)
     {
         const AllocationType AllocationType = AllocationType.Commit | AllocationType.Reserve;
@@ -131,12 +122,7 @@ public class Akira(IntPtr processHandle)
 
         var parameters = new object[]
         {
-            processHandle,
-            baseAddress,
-            IntPtr.Zero,
-            regionSize,
-            AllocationType,
-            protectionType
+            processHandle, baseAddress, IntPtr.Zero, regionSize, AllocationType, protectionType
         };
 
         var ntStatus = Generic.DynamicApiInvoke<NTStatus>(

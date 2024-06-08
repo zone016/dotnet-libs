@@ -3,4 +3,5 @@
 global using System.Diagnostics;
 
 global using Zone016.Typer;
-global using Zone016.Native;
+global using Zone016.Native.Cat;
+
