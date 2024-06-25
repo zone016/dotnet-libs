@@ -184,7 +184,7 @@ public class Memory : IDisposable
         var minimumAppAddress = systemInfo.lpMinimumApplicationAddress;
         var maximumAppAddress = systemInfo.lpMaximumApplicationAddress;
 
-        // Maybe I should do a unsafe pointer arithmetic instead of fighting with vALU?
+        // Maybe I should do an unsafe pointer arithmetic instead of fighting with vALU?
         if (memoryInformation.BaseAddress != IntPtr.Zero &&
             memoryInformation.BaseAddress.ToInt64() < minimumAppAddress.ToInt64())
         {
@@ -241,7 +241,7 @@ public class Memory : IDisposable
         
         var minimumAppAddress = systemInfo.lpMinimumApplicationAddress;
 
-        // Maybe I should do a unsafe pointer arithmetic instead of fighting with vALU?
+        // Maybe I should do an unsafe pointer arithmetic instead of fighting with vALU?
         if (baseAddress != IntPtr.Zero && baseAddress.ToInt64() < minimumAppAddress.ToInt64())
         {
             throw new ArgumentOutOfRangeException(
@@ -317,7 +317,7 @@ public class Memory : IDisposable
 
                 // Simplistic, need to be improved.
                 var scan = Scan(memoryDump, pattern, memoryInformation.BaseAddress).ToList();
-                if (scan.Any()) matches.AddRange(scan);
+                if (scan.Count != 0) matches.AddRange(scan);
             });
 
         return matches.ToImmutableList();
@@ -327,7 +327,7 @@ public class Memory : IDisposable
 
     #region Local Helpers
 
-    private static IEnumerable<IntPtr> Scan(IReadOnlyList<byte> memoryDump, 
+    private static List<IntPtr> Scan(IReadOnlyList<byte> memoryDump, 
         IReadOnlyList<byte> bytesSignature, IntPtr baseAddress)
     {
         var signatureMatches = new List<IntPtr>();
