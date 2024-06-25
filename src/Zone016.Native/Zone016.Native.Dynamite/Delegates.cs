@@ -47,7 +47,7 @@ public static class Delegates
         int processInformationLength,
         int returnLength
     );
-    
+
     [UnmanagedFunctionPointer(CallingConvention.StdCall)]
     public delegate NTStatus NtOpenProcessDelegate(
         ref IntPtr processHandle,

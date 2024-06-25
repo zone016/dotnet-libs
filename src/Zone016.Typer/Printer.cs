@@ -12,8 +12,10 @@ public static class Printer
 
     private static readonly string[] s_operations =
     [
-        "bold", "b",
-        "italic", "i"
+        "bold",
+        "b",
+        "italic",
+        "i"
     ];
 
     private static readonly Dictionary<string, string> s_colorAliases = new()
@@ -75,14 +77,17 @@ public static class Printer
                             ResetColor();
                         }
 
-                        else switch (lastTag)
+                        else
                         {
-                            case "bold" or "b":
-                                ResetBold(writer);
-                                break;
-                            case "italic" or "i":
-                                ResetItalic(writer);
-                                break;
+                            switch (lastTag)
+                            {
+                                case "bold" or "b":
+                                    ResetBold(writer);
+                                    break;
+                                case "italic" or "i":
+                                    ResetItalic(writer);
+                                    break;
+                            }
                         }
                     }
                 }
@@ -110,7 +115,11 @@ public static class Printer
                             ApplyHexColor(color, writer);
                         }
 
-                        if (!isOtherTag) continue;
+                        if (!isOtherTag)
+                        {
+                            continue;
+                        }
+
                         switch (openingTagName)
                         {
                             case "bold" or "b":
@@ -171,7 +180,7 @@ public static class Printer
         var r = int.Parse(hex.Substring(1, 2), System.Globalization.NumberStyles.HexNumber);
         var g = int.Parse(hex.Substring(3, 2), System.Globalization.NumberStyles.HexNumber);
         var b = int.Parse(hex.Substring(5, 2), System.Globalization.NumberStyles.HexNumber);
-        
+
         return $"{r};{g};{b}";
     }
 
@@ -233,6 +242,10 @@ public static class Printer
 
         return sanitized;
     }
+
+    public static void ShowCursor() => System.Console.CursorVisible = true;
+
+    public static void HideCursor() => System.Console.CursorVisible = false;
 
     public static void WriteSuccess(string message, bool sanitize = true)
     {

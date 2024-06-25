@@ -1,7 +1,5 @@
 ﻿// Copyright (c) Zone016 Hackerspace. All Rights Reserved. Licensed under the MIT license.
 
-using System.Text;
-
 namespace Zone016.Native.Tests;
 
 [TestClass]
@@ -14,17 +12,17 @@ public class UnitTestOfDynamite
             "kernel32.dll",
             "GetModuleHandleW"
         );
-        
+
         Assert.AreNotEqual(validLibraryAddress, IntPtr.Zero);
     }
-    
+
     [TestMethod]
     public void TestGetPebAddress()
     {
         var handle = Generic.GetPebAddress();
         Assert.AreNotEqual(handle, IntPtr.Zero);
     }
-    
+
     [TestMethod]
     public void TestGetPebModuleEntry()
     {

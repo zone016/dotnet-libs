@@ -1,4 +1,6 @@
-﻿namespace Zone016.Native.Cat;
+﻿// Copyright (c) Zone016 Hackerspace. All Rights Reserved. Licensed under the MIT license.
+
+namespace Zone016.Native.Cat;
 
 public class Akira(IntPtr processHandle)
 {

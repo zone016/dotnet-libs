@@ -7,19 +7,19 @@ internal class KeyListener(ILogger<KeyListener> logger, IHotKeyManager hotKeyMan
 {
     private readonly Settings _settings = Settings.Load();
 
-protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-{
-    while (!stoppingToken.IsCancellationRequested)
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        if (logger.IsEnabled(LogLevel.Information))
+        while (!stoppingToken.IsCancellationRequested)
         {
-            logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+            if (logger.IsEnabled(LogLevel.Information))
+            {
+                logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
 
-            var literal = JsonSerializer.Serialize(_settings, new SettingsContext().Settings);
-            logger.LogInformation("Current settings: {literal}", literal);
+                var literal = JsonSerializer.Serialize(_settings, new SettingsContext().Settings);
+                logger.LogInformation("Current settings: {literal}", literal);
+            }
+
+            await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
         }
-
-        await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
     }
-}
 }

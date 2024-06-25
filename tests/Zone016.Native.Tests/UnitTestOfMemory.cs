@@ -1,3 +1,5 @@
+﻿// Copyright (c) Zone016 Hackerspace. All Rights Reserved. Licensed under the MIT license.
+
 using Zone016.Native.Shared.Enums;
 
 namespace Zone016.Native.Tests;
@@ -5,7 +7,7 @@ namespace Zone016.Native.Tests;
 [TestClass]
 public class UnitTestOfMemory
 {
-   private readonly Memory _memory;
+    private readonly Memory _memory;
     private readonly Process _currentProcess;
 
     public UnitTestOfMemory()
@@ -37,7 +39,7 @@ public class UnitTestOfMemory
         Assert.AreEqual(memoryProtection, MemoryProtection.ReadWrite);
 
         var regionSize = IntPtr.Add(allocAddress, sizeof(int));
-        var allocMemoryInformation = 
+        var allocMemoryInformation =
             _memory.GetMemoryRegions(allocAddress, regionSize).ToArray();
         Assert.IsTrue(allocMemoryInformation.Length == 1);
 
@@ -56,30 +58,30 @@ public class UnitTestOfMemory
         var baseAddress = processModule.BaseAddress;
         Assert.AreNotEqual(baseAddress, IntPtr.Zero);
 
-        var something = new byte[] {0x83, 0xC5, 0x40, 0xF3, 0x0F, 0x10, 0xCA, 0x83, 0xED, 0x40};
-        
-        var pattern = new byte[]   {0x83, 0xC5, 0x00, 0x00, 0x00, 0x10, 0xCA, 0x00, 0xED, 0x40};
+        var something = new byte[] { 0x83, 0xC5, 0x40, 0xF3, 0x0F, 0x10, 0xCA, 0x83, 0xED, 0x40 };
+
+        var pattern = new byte[] { 0x83, 0xC5, 0x00, 0x00, 0x00, 0x10, 0xCA, 0x00, 0xED, 0x40 };
         const string Pattern2 = "83 C5 ?? ?? ?? 10 CA ?? ED 40";
         const string Pattern3 = "83c5??????10ca??ed40";
         const string Pattern4 = "83c5xxxxxx10caxxed40";
-        
+
         var allocAddress = _memory.AllocateVirtualMemory(something.Length);
         _memory.WriteVirtualMemory(allocAddress, something);
 
         var lastAddress = IntPtr.Add(allocAddress, something.Length);
         var matches = _memory.BinaryPatternSearch(pattern, allocAddress, lastAddress).ToArray();
-        
+
         Assert.IsTrue(matches.Length == 1);
         Assert.AreEqual(matches.First(), allocAddress);
-        
+
         matches = _memory.BinaryPatternSearch(Pattern2, allocAddress, lastAddress).ToArray();
         Assert.IsTrue(matches.Length == 1);
         Assert.AreEqual(matches.First(), allocAddress);
-        
+
         matches = _memory.BinaryPatternSearch(Pattern3, allocAddress, lastAddress).ToArray();
         Assert.IsTrue(matches.Length == 1);
         Assert.AreEqual(matches.First(), allocAddress);
-        
+
         matches = _memory.BinaryPatternSearch(Pattern4, allocAddress, lastAddress).ToArray();
         Assert.IsTrue(matches.Length == 1);
         Assert.AreEqual(matches.First(), allocAddress);

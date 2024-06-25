@@ -14,7 +14,7 @@ public class UnitTestOfAkira
         // var modules = akira.GetProcessModules();
         // Assert.IsNotNull(modules);
     }
-    
+
     [TestMethod]
     public void TestOfVirtualMemoryWriteOfInt()
     {
@@ -25,7 +25,7 @@ public class UnitTestOfAkira
         const int Pattern = int.MaxValue;
         var allocatedMemory = akira.AllocateVirtualMemory(sizeof(int));
         Assert.AreNotEqual(allocatedMemory, IntPtr.Zero);
-        
+
         akira.WriteVirtualMemory(allocatedMemory, Pattern);
         var readValue = akira.ReadVirtualMemory<int>(allocatedMemory);
         Assert.AreEqual(readValue, Pattern);

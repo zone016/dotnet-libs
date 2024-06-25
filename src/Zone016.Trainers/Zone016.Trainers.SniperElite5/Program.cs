@@ -1,4 +1,6 @@
-﻿Printer.WriteLine("Sniper Elite 5 trainer in ntdll.dll");
+﻿// Copyright (c) Zone016 Hackerspace. All Rights Reserved. Licensed under the MIT license.
+
+Printer.WriteLine("Sniper Elite 5 trainer in ntdll.dll");
 
 if (!Environment.Is64BitProcess)
 {
@@ -33,7 +35,7 @@ Printer.WriteLine($"Starting traversing from [b]0x{process.MainModule.BaseAddres
 var cancellationTokenSource = new CancellationTokenSource();
 process.Exited += (_, _) =>
 {
-    var exitCode = process.ExitCode; 
+    var exitCode = process.ExitCode;
     Printer.WriteError($"The game has exited [b]({exitCode}[/].", false);
     cancellationTokenSource.Cancel();
 };

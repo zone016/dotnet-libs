@@ -1,8 +1,5 @@
 ﻿// Copyright (c) Zone016 Hackerspace. All Rights Reserved. Licensed under the MIT license.
 
-using Zone016.Native.Shared.Enums;
-using Zone016.Native.Shared.Structs;
-
 namespace Zone016.Native;
 
 public static class Kernel32
@@ -80,7 +77,7 @@ public static class Kernel32
         IntPtr hSnapshot,
         ref ProcessEntry32 lppe
     );
-    
+
     [DllImport("kernel32.dll", SetLastError = true)]
     public static extern bool ReadProcessMemory(
         SafeProcessHandle hProcess,
