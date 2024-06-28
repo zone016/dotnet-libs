@@ -1,7 +1,5 @@
 ﻿// Copyright (c) Zone016 Hackerspace. All Rights Reserved. Licensed under the MIT license.
 
-using Zone016.Native.Shared.Enums;
-
 namespace Zone016.Octopus.Tests;
 
 [TestClass]
@@ -10,6 +8,11 @@ public class IntegrationTestOfHotKeyManager
     [TestMethod]
     public void TestThreadCreation()
     {
+        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            Assert.Inconclusive("This test is only supported on Windows.");
+        }
+        
         var manager = new HotKeyManager();
         var registration = manager.Register(Modifiers.Alt, VirtualKeyCode.KeyZ);
 
@@ -57,6 +60,7 @@ public class IntegrationTestOfHotKeyManager
                 const string Fragment = "Octopus";
                 if (literal.Contains(Fragment))
                 {
+                    Console.WriteLine($"Found thread with description: {literal}.");
                     found = true;
                     break;
                 }
