@@ -1,5 +1,7 @@
 ﻿// Copyright (c) Zone016 Hackerspace. All Rights Reserved. Licensed under the MIT license.
 
+global using System.ComponentModel;
+global using System.Diagnostics;
 global using System.Reflection;
 global using System.Runtime.InteropServices;
 

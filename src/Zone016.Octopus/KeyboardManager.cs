@@ -2,7 +2,7 @@
 
 namespace Zone016.Octopus;
 
-public sealed class HotKeyManager : IHotKeyManager
+public sealed class KeyboardManager : IKeyboardManager
 {
     private const uint KeyCombination = 0x312u;
     private const uint RegisterKey = 0x0400u;
@@ -14,17 +14,17 @@ public sealed class HotKeyManager : IHotKeyManager
 
     public event EventHandler<KeyPressedEventArgs>? KeyPressed;
 
-    public HotKeyManager()
+    public KeyboardManager()
     {
         _messageLoopThread = InitializeMessageLoop();
     }
 
-    public IRegistration Register(Modifiers modifiers, VirtualKeyCode key)
+    public IRegistration Register(Modifiers modifiers, KeyboardVirtualKeyCode key)
     {
         var (_, windowHandle) = _messageLoopThread;
         var result = User32.SendMessage(windowHandle, RegisterKey, (IntPtr)key, (IntPtr)modifiers);
 
-        return new Registration(result, windowHandle);
+        return new KeyboardRegistration(result, windowHandle);
     }
 
     private (Thread, IntPtr) InitializeMessageLoop()
@@ -41,10 +41,12 @@ public sealed class HotKeyManager : IHotKeyManager
         return (thread, handle.Task.Result);
     }
 
-    private void MessageLoopThreadEntry(TaskCompletionSource<IntPtr> handle, Dictionary<int, KeyCombination?> registrations)
+    private void MessageLoopThreadEntry(TaskCompletionSource<IntPtr> handle,
+        Dictionary<int, KeyCombination?> registrations)
     {
         var hInstance = Kernel32.GetModuleHandle(default);
-        var wndProc = new WndProc((windowHandle, uMsg, wParam, lParam) => MessageHandler(windowHandle, uMsg, wParam, lParam, registrations));
+        var wndProc = new WndProc((windowHandle, uMsg, wParam, lParam) =>
+            MessageHandler(windowHandle, uMsg, wParam, lParam, registrations));
         var wndClassEx = new WindowClassEx
         {
             cbSize = (uint)Marshal.SizeOf<WindowClassEx>(),
@@ -115,7 +117,7 @@ public sealed class HotKeyManager : IHotKeyManager
         Dictionary<int, KeyCombination?> registrations)
     {
         var id = GetNextId(registrations);
-        var key = checked((VirtualKeyCode)(int)wParam);
+        var key = checked((KeyboardVirtualKeyCode)(int)wParam);
         var modifiers = checked((Modifiers)(int)lParam);
         if (id.HasValue && RegisterKeyCombination(windowHandle, key, modifiers, id.Value, registrations))
         {
@@ -125,7 +127,8 @@ public sealed class HotKeyManager : IHotKeyManager
         return -1;
     }
 
-    private static IntPtr HandleUnregisterKeyCombination(IntPtr windowHandle, IntPtr wParam, Dictionary<int, KeyCombination?> registrations)
+    private static IntPtr HandleUnregisterKeyCombination(IntPtr windowHandle, IntPtr wParam,
+        Dictionary<int, KeyCombination?> registrations)
     {
         var id = checked((int)wParam);
         if (UnregisterKeyCombination(windowHandle, id, registrations))
@@ -161,7 +164,8 @@ public sealed class HotKeyManager : IHotKeyManager
         return default;
     }
 
-    private static bool RegisterKeyCombination(IntPtr windowHandle, VirtualKeyCode key, Modifiers modifiers, int id,
+    private static bool RegisterKeyCombination(IntPtr windowHandle, KeyboardVirtualKeyCode key, Modifiers modifiers,
+        int id,
         Dictionary<int, KeyCombination?> registrations)
     {
         if (!User32.RegisterHotKey(windowHandle, id, modifiers, key))
@@ -173,7 +177,8 @@ public sealed class HotKeyManager : IHotKeyManager
         return true;
     }
 
-    private static bool UnregisterKeyCombination(IntPtr windowHandle, int id, Dictionary<int, KeyCombination?> registrations)
+    private static bool UnregisterKeyCombination(IntPtr windowHandle, int id,
+        Dictionary<int, KeyCombination?> registrations)
     {
         var registration = registrations.GetValueOrDefault(id);
         if (registration is null || !User32.UnregisterHotKey(windowHandle, registration.Id))

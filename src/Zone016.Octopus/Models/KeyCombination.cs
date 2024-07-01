@@ -4,9 +4,9 @@ using Zone016.Native.Shared.Enums;
 
 namespace Zone016.Octopus.Models;
 
-public record KeyCombination(int Id, Modifiers Modifiers, VirtualKeyCode Key)
+public record KeyCombination(int Id, Modifiers Modifiers, KeyboardVirtualKeyCode Key)
 {
     public readonly int Id = Id;
     public readonly Modifiers Modifiers = Modifiers;
-    public readonly VirtualKeyCode Key = Key;
+    public readonly KeyboardVirtualKeyCode Key = Key;
 }

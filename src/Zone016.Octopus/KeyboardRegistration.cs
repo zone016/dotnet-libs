@@ -2,7 +2,7 @@
 
 namespace Zone016.Octopus;
 
-public class Registration(IntPtr result, IntPtr hWnd) : IRegistration
+public class KeyboardRegistration(IntPtr result, IntPtr hWnd) : IRegistration
 {
     private const uint UnregisterKey = 0x0401u;
 
@@ -11,12 +11,9 @@ public class Registration(IntPtr result, IntPtr hWnd) : IRegistration
 
     public void Dispose()
     {
-        checked
+        if (checked((int)result != -1))
         {
-            if ((int)result != -1)
-            {
-                User32.SendMessage(hWnd, UnregisterKey, result, IntPtr.Zero);
-            }
+            User32.SendMessage(hWnd, UnregisterKey, result, IntPtr.Zero);
         }
     }
 }

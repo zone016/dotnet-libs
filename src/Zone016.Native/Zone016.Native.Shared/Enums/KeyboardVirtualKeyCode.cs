@@ -6,18 +6,8 @@ namespace Zone016.Native.Shared.Enums;
 /// Virtual key codes for keyboard keys.
 /// <para>Only cover ANSI keys.</para>
 /// </summary>
-public enum VirtualKeyCode
+public enum KeyboardVirtualKeyCode
 {
-    /// <summary>
-    /// Left mouse button.
-    /// </summary>
-    LeftButton = 0x01,
-
-    /// <summary>
-    /// Right mouse button.
-    /// </summary>
-    RightButton = 0x02,
-
     /// <summary>
     /// Control-break processing.
     /// </summary>

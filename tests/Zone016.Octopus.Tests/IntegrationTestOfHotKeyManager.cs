@@ -13,8 +13,8 @@ public class IntegrationTestOfHotKeyManager
             Assert.Inconclusive("This test is only supported on Windows.");
         }
         
-        var manager = new HotKeyManager();
-        var registration = manager.Register(Modifiers.Alt, VirtualKeyCode.KeyZ);
+        var manager = new KeyboardManager();
+        var registration = manager.Register(Modifiers.Alt, KeyboardVirtualKeyCode.KeyZ);
 
         Assert.IsNotNull(registration);
         Assert.IsTrue(registration.IsSuccessful);

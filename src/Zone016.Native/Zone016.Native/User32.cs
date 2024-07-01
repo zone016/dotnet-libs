@@ -5,6 +5,45 @@ namespace Zone016.Native;
 public static class User32
 {
     /// <summary>
+    /// Installs an application-defined hook procedure into a hook chain.
+    /// </summary>
+    /// <param name="idHook">Type of hook procedure to be installed.</param>
+    /// <param name="lpfn">Pointer to the hook procedure.</param>
+    /// <param name="hMod">Handle to the DLL containing the hook procedure.</param>
+    /// <param name="dwThreadId">Identifier of the thread with which the hook procedure is associated.</param>
+    /// <returns>If successful, returns the handle to the hook procedure; otherwise, returns IntPtr.Zero.</returns>
+    [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+    public static extern IntPtr SetWindowsHookEx(int idHook, LowLevelMouseProc lpfn, IntPtr hMod, uint dwThreadId);
+
+    /// <summary>
+    /// Removes a hook procedure installed in a hook chain.
+    /// </summary>
+    /// <param name="hhk">Handle to the hook procedure to be removed.</param>
+    /// <returns>True if successful; otherwise, false.</returns>
+    [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    public static extern bool UnhookWindowsHookEx(IntPtr hhk);
+
+    /// <summary>
+    /// Passes the hook information to the next hook procedure in the chain.
+    /// </summary>
+    /// <param name="hhk">Handle to the current hook.</param>
+    /// <param name="nCode">Hook code passed to the current hook procedure.</param>
+    /// <param name="wParam">Parameter passed to the current hook procedure.</param>
+    /// <param name="lParam">Parameter passed to the current hook procedure.</param>
+    /// <returns>Value returned by the next hook procedure in the chain.</returns>
+    [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+    public static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
+
+    /// <summary>
+    /// Determines whether a key is up or down at the time the function is called.
+    /// </summary>
+    /// <param name="vKey">The virtual-key code.</param>
+    /// <returns>Value specifying the status of the specified virtual key.</returns>
+    [DllImport("user32.dll")]
+    public static extern short GetAsyncKeyState(KeyboardVirtualKeyCode vKey);
+    
+    /// <summary>
     /// Registers a window class for subsequent use in calls to the CreateWindow or CreateWindowEx function.
     /// </summary>
     /// <param name="lpwcx">A pointer to a WNDCLASSEX structure.</param>
@@ -110,7 +149,7 @@ public static class User32
         IntPtr hWnd,
         int id,
         Modifiers fsModifiers,
-        VirtualKeyCode vk);
+        KeyboardVirtualKeyCode vk);
 
     /// <summary>
     /// Frees a hot key previously registered by the calling thread.
